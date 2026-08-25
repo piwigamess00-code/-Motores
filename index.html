@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏎️ Engines</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      color: #222;
+    }
+
+    header {
+      background: #222;
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .ticketButton {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      background: white;
+      color: #222;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 11px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #engineList {
+      padding: 15px;
+      padding-bottom: 20px;
+    }
+
+    .engine {
+      background: white;
+      border-radius: 15px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .engineTitle {
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .engineContent {
+      padding: 0 15px 15px;
+    }
+
+    .engine input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .result {
+      background: #f1f1f1;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      margin-top: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .addButton {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #222;
+      color: white;
+      font-size: 30px;
+      z-index: 10;
+    }
+
+    .deleteButton {
+      background: #e53935;
+      color: white;
+    }
+
+    .arrow {
+      transition: transform 0.2s;
+    }
+
+    .closed .arrow {
+      transform: rotate(-90deg);
+    }
+
+    /* TOTAL */
+
+    .grandTotal {
+      background: #222;
+      color: white;
+      margin: 15px;
+      padding: 18px;
+      border-radius: 15px;
+      margin-bottom: 100px;
+    }
+
+    .grandTotal h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .totalRow {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #555;
+    }
+
+    .totalRow:last-child {
+      border-bottom: none;
+    }
+
+    .totalProfit {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    /* TICKET */
+
+    .ticketOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 20;
+      padding: 20px;
+    }
+
+    .ticket {
+      background: white;
+      max-width: 400px;
+      margin: 50px auto;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+
+    .ticket h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .ticketRow {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .ticketProfit {
+      font-size: 22px;
+      font-weight: bold;
+      padding-top: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .closeTicket {
+      width: 100%;
+      margin-top: 18px;
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    🏎️ Engines
+
+    <button
+      class="ticketButton"
+      onclick="openTicket()"
+    >
+      🎟️ Ticket
+    </button>
+  </header>
+
+  <div id="engineList"></div>
+
+  <!-- TOTAL OF ALL ENGINES -->
+
+  <div class="grandTotal">
+
+    <h2>📊 Total</h2>
+
+    <div class="totalRow">
+      <span>Engines</span>
+      <strong id="totalEngines">0</strong>
+    </div>
+
+    <div class="totalRow">
+      <span>Total Purchase</span>
+      <strong id="totalPurchase">$0.00</strong>
+    </div>
+
+    <div class="totalRow">
+      <span>Total Sales</span>
+      <strong id="totalSales">$0.00</strong>
+    </div>
+
+    <div class="totalRow">
+      <span>Total Paid</span>
+      <strong id="totalPaid">$0.00</strong>
+    </div>
+
+    <div class="totalRow">
+      <span>Total Remaining</span>
+      <strong id="totalRemaining">$0.00</strong>
+    </div>
+
+    <div class="totalProfit">
+      <span>Total Profit</span>
+      <span id="totalProfit">$0.00</span>
+    </div>
+
+  </div>
+
+  <button
+    class="addButton"
+    onclick="addEngine()"
+  >
+    +
+  </button>
+
+
+  <!-- TICKET POPUP -->
+
+  <div
+    class="ticketOverlay"
+    id="ticketOverlay"
+    onclick="closeTicket(event)"
+  >
+
+    <div
+      class="ticket"
+      onclick="event.stopPropagation()"
+    >
+
+      <h2>🎟️ Ticket</h2>
+
+      <div class="ticketRow">
+        <span>Total Purchase</span>
+        <strong id="ticketPurchase">$0.00</strong>
+      </div>
+
+      <div class="ticketRow">
+        <span>Total Sales</span>
+        <strong id="ticketSales">$0.00</strong>
+      </div>
+
+      <div class="ticketRow">
+        <span>Total Paid</span>
+        <strong id="ticketPaid">$0.00</strong>
+      </div>
+
+      <div class="ticketRow">
+        <span>Remaining</span>
+        <strong id="ticketRemaining">$0.00</strong>
+      </div>
+
+      <div class="ticketProfit">
+        <span>💰 Profit</span>
+        <span id="ticketProfit">$0.00</span>
+      </div>
+
+      <button
+        class="closeTicket"
+        onclick="closeTicket()"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    let engines =
+      JSON.parse(
+        localStorage.getItem("engines")
+      ) || [];
+
+
+    function save() {
+
+      localStorage.setItem(
+        "engines",
+        JSON.stringify(engines)
+      );
+
+    }
+
+
+    function getTotals() {
+
+      let purchase = 0;
+      let sales = 0;
+      let paid = 0;
+
+      engines.forEach(engine => {
+
+        purchase +=
+          parseFloat(
+            engine.purchasePrice
+          ) || 0;
+
+        sales +=
+          parseFloat(
+            engine.salePrice
+          ) || 0;
+
+        paid +=
+          parseFloat(
+            engine.amountPaid
+          ) || 0;
+
+      });
+
+      const remaining =
+        Math.max(sales - paid, 0);
+
+      const profit =
+        sales - purchase;
+
+      return {
+        purchase,
+        sales,
+        paid,
+        remaining,
+        profit
+      };
+
+    }
+
+
+    function showEngines() {
+
+      const list =
+        document.getElementById(
+          "engineList"
+        );
+
+      list.innerHTML = "";
+
+
+      engines.forEach(
+        (engine, index) => {
+
+          const purchase =
+            parseFloat(
+              engine.purchasePrice
+            ) || 0;
+
+          const sale =
+            parseFloat(
+              engine.salePrice
+            ) || 0;
+
+          const paid =
+            parseFloat(
+              engine.amountPaid
+            ) || 0;
+
+          const remaining =
+            Math.max(
+              sale - paid,
+              0
+            );
+
+          const profit =
+            sale - purchase;
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+          card.className = "engine";
+
+
+          card.innerHTML = `
+
+            <div
+              class="engineTitle"
+              onclick="openClose(${index})"
+            >
+
+              <span>
+                🏎️ Engine #${engine.id}
+                ${
+                  engine.name
+                    ? " - " + engine.name
+                    : ""
+                }
+              </span>
+
+              <span class="arrow">
+                ▼
+              </span>
+
+            </div>
+
+
+            <div
+              class="engineContent"
+              id="content${index}"
+            >
+
+              <input
+                placeholder="Engine / Model"
+                value="${engine.name}"
+                oninput="
+                  updateEngine(
+                    ${index},
+                    'name',
+                    this.value
+                  )
+                "
+              >
+
+
+              <input
+                type="number"
+                inputmode="decimal"
+                placeholder="Purchase Price"
+                value="${engine.purchasePrice}"
+                oninput="
+                  updateEngine(
+                    ${index},
+                    'purchasePrice',
+                    this.value
+                  )
+                "
+              >
+
+
+              <input
+                type="number"
+                inputmode="decimal"
+                placeholder="Sale Price"
+                value="${engine.salePrice}"
+                oninput="
+                  updateEngine(
+                    ${index},
+                    'salePrice',
+                    this.value
+                  )
+                "
+              >
+
+
+              <input
+                type="number"
+                inputmode="decimal"
+                placeholder="Amount Paid"
+                value="${engine.amountPaid}"
+                oninput="
+                  updateEngine(
+                    ${index},
+                    'amountPaid',
+                    this.value
+                  )
+                "
+              >
+
+
+              <div class="result">
+                💳 Remaining Balance:
+                <strong>
+                  $${remaining.toFixed(2)}
+                </strong>
+              </div>
+
+
+              <div class="result">
+                📈 Profit:
+                <strong>
+                  $${profit.toFixed(2)}
+                </strong>
+              </div>
+
+
+              <div class="buttons">
+
+                <button
+                  class="deleteButton"
+                  onclick="
+                    deleteEngine(${index})
+                  "
+                >
+                  🗑️ Delete
+                </button>
+
+              </div>
+
+            </div>
+          `;
+
+
+          list.appendChild(card);
+
+        }
+      );
+
+
+      updateTotals();
+
+    }
+
+
+    function updateTotals() {
+
+      const totals =
+        getTotals();
+
+
+      document.getElementById(
+        "totalEngines"
+      ).textContent =
+        engines.length;
+
+
+      document.getElementById(
+        "totalPurchase"
+      ).textContent =
+        "$" +
+        totals.purchase.toFixed(2);
+
+
+      document.getElementById(
+        "totalSales"
+      ).textContent =
+        "$" +
+        totals.sales.toFixed(2);
+
+
+      document.getElementById(
+        "totalPaid"
+      ).textContent =
+        "$" +
+        totals.paid.toFixed(2);
+
+
+      document.getElementById(
+        "totalRemaining"
+      ).textContent =
+        "$" +
+        totals.remaining.toFixed(2);
+
+
+      document.getElementById(
+        "totalProfit"
+      ).textContent =
+        "$" +
+        totals.profit.toFixed(2);
+
+    }
+
+
+    function addEngine() {
+
+      let newId = 1;
+
+
+      if (engines.length > 0) {
+
+        newId =
+          Math.max(
+            ...engines.map(
+              engine => engine.id
+            )
+          ) + 1;
+
+      }
+
+
+      engines.push({
+
+        id: newId,
+        name: "",
+        purchasePrice: "",
+        salePrice: "",
+        amountPaid: ""
+
+      });
+
+
+      save();
+      showEngines();
+
+    }
+
+
+    function updateEngine(
+      index,
+      field,
+      value
+    ) {
+
+      engines[index][field] =
+        value;
+
+      save();
+      showEngines();
+
+    }
+
+
+    function deleteEngine(index) {
+
+      if (
+        confirm(
+          "Are you sure you want to delete this engine?"
+        )
+      ) {
+
+        engines.splice(
+          index,
+          1
+        );
+
+        save();
+        showEngines();
+
+      }
+
+    }
+
+
+    function openClose(index) {
+
+      const content =
+        document.getElementById(
+          "content" + index
+        );
+
+      const engine =
+        content.parentElement;
+
+
+      if (
+        content.style.display ===
+        "none"
+      ) {
+
+        content.style.display =
+          "block";
+
+        engine.classList.remove(
+          "closed"
+        );
+
+      } else {
+
+        content.style.display =
+          "none";
+
+        engine.classList.add(
+          "closed"
+        );
+
+      }
+
+    }
+
+
+    function openTicket() {
+
+      const totals =
+        getTotals();
+
+
+      document.getElementById(
+        "ticketPurchase"
+      ).textContent =
+        "$" +
+        totals.purchase.toFixed(2);
+
+
+      document.getElementById(
+        "ticketSales"
+      ).textContent =
+        "$" +
+        totals.sales.toFixed(2);
+
+
+      document.getElementById(
+        "ticketPaid"
+      ).textContent =
+        "$" +
+        totals.paid.toFixed(2);
+
+
+      document.getElementById(
+        "ticketRemaining"
+      ).textContent =
+        "$" +
+        totals.remaining.toFixed(2);
+
+
+      document.getElementById(
+        "ticketProfit"
+      ).textContent =
+        "$" +
+        totals.profit.toFixed(2);
+
+
+      document.getElementById(
+        "ticketOverlay"
+      ).style.display =
+        "block";
+
+    }
+
+
+    function closeTicket(event) {
+
+      if (
+        event &&
+        event.target.id !==
+        "ticketOverlay"
+      ) {
+        return;
+      }
+
+      document.getElementById(
+        "ticketOverlay"
+      ).style.display =
+        "none";
+
+    }
+
+
+    showEngines();
+
+  </script>
+
+</body>
+</html>

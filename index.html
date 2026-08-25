@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motors Tracker</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f4f4;
+  color: #222;
+}
+
+header {
+  background: #222;
+  color: white;
+  padding: 18px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+}
+
+.ticketButton {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: white;
+  color: #222;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.searchBox {
+  padding: 15px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+  background: white;
+  color: #222;
+  outline: none;
+}
+
+#engineList {
+  padding: 0 15px 100px;
+}
+
+.engine {
+  background: white;
+  border-radius: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.12);
+  overflow: hidden;
+}
+
+.engineTitle {
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.engineContent {
+  padding: 0 15px 15px;
+}
+
+.engineInput {
+  width: 100%;
+  padding: 11px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+  color: #222;
+  outline: none;
+}
+
+.result {
+  background: #f1f1f1;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.quantityBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.quantityButton {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 9px;
+  color: white;
+  font-size: 23px;
+  font-weight: bold;
+  padding: 0;
+  cursor: pointer;
+}
+
+.minusButton {
+  background: #e53935;
+}
+
+.plusButton {
+  background: #2e9d44;
+}
+
+.quantityInput {
+  width: 55px;
+  height: 38px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  font-size: 18px;
+  font-weight: bold;
+  background: white;
+  color: #222;
+  outline: none;
+}
+
+.deleteButton {
+  margin-top: 12px;
+  background: #e53935;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.addButton {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #222;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  border: none;
+  padding: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.noResults {
+  display: none;
+  text-align: center;
+  color: #777;
+  padding: 30px;
+}
+
+.ticketOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 20;
+  padding: 20px;
+}
+
+.ticket {
+  background: white;
+  max-width: 400px;
+  margin: 40px auto;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 5px 25px rgba(0,0,0,.3);
+}
+
+.ticket h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.ticketRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.ticketProfit {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 15px;
+}
+
+.closeTicket {
+  width: 100%;
+  margin-top: 18px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 11px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  🏎️ Motors
+
+  <button
+    type="button"
+    class="ticketButton"
+    id="ticketButton"
+  >
+    🎟️ Ticket
+  </button>
+</header>
+
+<div class="searchBox">
+  <input
+    type="search"
+    id="searchInput"
+    class="searchInput"
+    placeholder="🔍 Search motors..."
+    autocomplete="off"
+  >
+</div>
+
+<div id="engineList"></div>
+
+<div id="noResults" class="noResults">
+  No motors found.
+</div>
+
+<button
+  type="button"
+  class="addButton"
+  id="addButton"
+>
+  +
+</button>
+
+<div
+  class="ticketOverlay"
+  id="ticketOverlay"
+>
+  <div class="ticket">
+
+    <h2>🎟️ Ticket</h2>
+
+    <div class="ticketRow">
+      <span>Total Motors</span>
+      <strong id="ticketQuantity">0</strong>
+    </div>
+
+    <div class="ticketRow">
+      <span>Total Purchase</span>
+      <strong id="ticketPurchase">$0.00</strong>
+    </div>
+
+    <div class="ticketRow">
+      <span>Total Sales</span>
+      <strong id="ticketSales">$0.00</strong>
+    </div>
+
+    <div class="ticketProfit">
+      <span>💰 Total Profit</span>
+      <span id="ticketProfit">$0.00</span>
+    </div>
+
+    <button
+      type="button"
+      class="closeTicket"
+      id="closeTicket"
+    >
+      Close
+    </button>
+
+  </div>
+</div>
+
+<script>
+
+let motors =
+  JSON.parse(
+    localStorage.getItem("motors")
+  ) || [];
+
+
+/* SAVE */
+
+function save() {
+  localStorage.setItem(
+    "motors",
+    JSON.stringify(motors)
+  );
+}
+
+
+/* ADD MOTOR */
+
+document
+.getElementById("addButton")
+.addEventListener(
+  "click",
+  function() {
+
+    motors.push({
+      id:
+        Date.now() +
+        Math.random(),
+
+      name: "",
+
+      quantity: 1,
+
+      purchasePrice: "",
+
+      salePrice: ""
+    });
+
+    save();
+
+    showMotors();
+  }
+);
+
+
+/* SHOW MOTORS */
+
+function showMotors(search = "") {
+
+  const list =
+    document.getElementById(
+      "engineList"
+    );
+
+  const noResults =
+    document.getElementById(
+      "noResults"
+    );
+
+  list.innerHTML = "";
+
+  const searchText =
+    search
+      .trim()
+      .toLowerCase();
+
+  let found = 0;
+
+
+  motors.forEach(
+    function(motor) {
+
+      const name =
+        String(
+          motor.name || ""
+        ).toLowerCase();
+
+
+      if (
+        searchText &&
+        !name.includes(searchText)
+      ) {
+        return;
+      }
+
+
+      found++;
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "engine";
+
+
+      card.innerHTML = `
+
+        <div class="engineTitle">
+
+          <span class="motorName">
+            ${
+              motor.name ||
+              "New Motor"
+            }
+          </span>
+
+          <span>▼</span>
+
+        </div>
+
+
+        <div class="engineContent">
+
+          <input
+            class="engineInput nameInput"
+            type="text"
+            placeholder="Motor / Model"
+            value="${escapeHTML(
+              motor.name
+            )}"
+          >
+
+
+          <input
+            class="engineInput purchaseInput"
+            type="number"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Purchase Price"
+            value="${escapeHTML(
+              motor.purchasePrice
+            )}"
+          >
+
+
+          <input
+            class="engineInput saleInput"
+            type="number"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Sale Price"
+            value="${escapeHTML(
+              motor.salePrice
+            )}"
+          >
+
+
+          <div class="result">
+            📈 Profit:
+            <strong class="profit">
+              $0.00
+            </strong>
+          </div>
+
+
+          <div class="quantityBox">
+
+            <button
+              type="button"
+              class="quantityButton minusButton"
+            >
+              −
+            </button>
+
+            <input
+              class="quantityInput"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              value="${motor.quantity}"
+            >
+
+            <button
+              type="button"
+              class="quantityButton plusButton"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="deleteButton"
+          >
+            🗑️ Delete
+          </button>
+
+        </div>
+      `;
+
+
+      list.appendChild(card);
+
+
+      const nameInput =
+        card.querySelector(
+          ".nameInput"
+        );
+
+      const quantityInput =
+        card.querySelector(
+          ".quantityInput"
+        );
+
+      const purchaseInput =
+        card.querySelector(
+          ".purchaseInput"
+        );
+
+      const saleInput =
+        card.querySelector(
+          ".saleInput"
+        );
+
+
+      /* NAME */
+
+      nameInput.addEventListener(
+        "input",
+        function() {
+
+          motor.name =
+            this.value;
+
+          card.querySelector(
+            ".motorName"
+          ).textContent =
+            motor.name ||
+            "New Motor";
+
+          save();
+        }
+      );
+
+
+      /* PLUS */
+
+      card
+      .querySelector(
+        ".plusButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+
+          motor.quantity =
+            Number(
+              motor.quantity
+            ) + 1;
+
+          quantityInput.value =
+            motor.quantity;
+
+          save();
+
+          updateCard(
+            card,
+            motor
+          );
+        }
+      );
+
+
+      /* MINUS */
+
+      card
+      .querySelector(
+        ".minusButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+
+          motor.quantity =
+            Math.max(
+              0,
+              Number(
+                motor.quantity
+              ) - 1
+            );
+
+          quantityInput.value =
+            motor.quantity;
+
+          save();
+
+          updateCard(
+            card,
+            motor
+          );
+        }
+      );
+
+
+      /* CUSTOM QUANTITY */
+
+      quantityInput.addEventListener(
+        "input",
+        function() {
+
+          let value =
+            parseInt(
+              this.value,
+              10
+            );
+
+          if (
+            isNaN(value) ||
+            value < 0
+          ) {
+            value = 0;
+          }
+
+          motor.quantity =
+            value;
+
+          save();
+
+          updateCard(
+            card,
+            motor
+          );
+        }
+      );
+
+
+      /* PURCHASE */
+
+      purchaseInput.addEventListener(
+        "input",
+        function() {
+
+          motor.purchasePrice =
+            this.value;
+
+          save();
+
+          updateCard(
+            card,
+            motor
+          );
+        }
+      );
+
+
+      /* SALE */
+
+      saleInput.addEventListener(
+        "input",
+        function() {
+
+          motor.salePrice =
+            this.value;
+
+          save();
+
+          updateCard(
+            card,
+            motor
+          );
+        }
+      );
+
+
+      /* DELETE */
+
+      card
+      .querySelector(
+        ".deleteButton"
+      )
+      .addEventListener(
+        "click",
+        function() {
+
+          const index =
+            motors.findIndex(
+              function(item) {
+                return (
+                  item.id ===
+                  motor.id
+                );
+              }
+            );
+
+
+          if (
+            index !== -1
+          ) {
+
+            motors.splice(
+              index,
+              1
+            );
+
+            save();
+
+            showMotors(
+              document
+              .getElementById(
+                "searchInput"
+              )
+              .value
+            );
+          }
+        }
+      );
+
+
+      /* OPEN / CLOSE */
+
+      card
+      .querySelector(
+        ".engineTitle"
+      )
+      .addEventListener(
+        "click",
+        function() {
+
+          const content =
+            card.querySelector(
+              ".engineContent"
+            );
+
+
+          if (
+            content.style.display ===
+            "none"
+          ) {
+
+            content.style.display =
+              "block";
+
+          } else {
+
+            content.style.display =
+              "none";
+          }
+        }
+      );
+
+
+      updateCard(
+        card,
+        motor
+      );
+
+    }
+  );
+
+
+  noResults.style.display =
+    found === 0
+      ? "block"
+      : "none";
+}
+
+
+/* UPDATE CARD */
+
+function updateCard(
+  card,
+  motor
+) {
+
+  const quantity =
+    Number(
+      motor.quantity
+    ) || 0;
+
+  const purchase =
+    Number(
+      motor.purchasePrice
+    ) || 0;
+
+  const sale =
+    Number(
+      motor.salePrice
+    ) || 0;
+
+
+  const totalPurchase =
+    purchase *
+    quantity;
+
+  const totalSale =
+    sale *
+    quantity;
+
+  const profit =
+    totalSale -
+    totalPurchase;
+
+
+  card.querySelector(
+    ".profit"
+  ).textContent =
+    "$" +
+    profit.toFixed(2);
+}
+
+
+/* SEARCH */
+
+document
+.getElementById(
+  "searchInput"
+)
+.addEventListener(
+  "input",
+  function() {
+
+    showMotors(
+      this.value
+    );
+  }
+);
+
+
+/* TOTALS */
+
+function getTotals() {
+
+  let quantity = 0;
+  let purchase = 0;
+  let sales = 0;
+
+
+  motors.forEach(
+    function(motor) {
+
+      const q =
+        Number(
+          motor.quantity
+        ) || 0;
+
+      const p =
+        Number(
+          motor.purchasePrice
+        ) || 0;
+
+      const s =
+        Number(
+          motor.salePrice
+        ) || 0;
+
+
+      quantity += q;
+
+      purchase +=
+        p * q;
+
+      sales +=
+        s * q;
+    }
+  );
+
+
+  return {
+
+    quantity,
+
+    purchase,
+
+    sales,
+
+    profit:
+      sales -
+      purchase
+  };
+}
+
+
+/* OPEN TICKET */
+
+document
+.getElementById(
+  "ticketButton"
+)
+.addEventListener(
+  "click",
+  function() {
+
+    const totals =
+      getTotals();
+
+
+    document.getElementById(
+      "ticketQuantity"
+    ).textContent =
+      totals.quantity;
+
+
+    document.getElementById(
+      "ticketPurchase"
+    ).textContent =
+      "$" +
+      totals.purchase.toFixed(2);
+
+
+    document.getElementById(
+      "ticketSales"
+    ).textContent =
+      "$" +
+      totals.sales.toFixed(2);
+
+
+    document.getElementById(
+      "ticketProfit"
+    ).textContent =
+      "$" +
+      totals.profit.toFixed(2);
+
+
+    document.getElementById(
+      "ticketOverlay"
+    ).style.display =
+      "block";
+  }
+);
+
+
+/* CLOSE TICKET */
+
+document
+.getElementById(
+  "closeTicket"
+)
+.addEventListener(
+  "click",
+  function() {
+
+    document.getElementById(
+      "ticketOverlay"
+    ).style.display =
+      "none";
+  }
+);
+
+
+/* CLOSE TICKET BY BACKGROUND */
+
+document
+.getElementById(
+  "ticketOverlay"
+)
+.addEventListener(
+  "click",
+  function(event) {
+
+    if (
+      event.target ===
+      this
+    ) {
+
+      this.style.display =
+        "none";
+    }
+  }
+);
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+}
+
+
+/* START */
+
+showMotors();
+
+</script>
+
+</body>
+</html>

@@ -1,738 +1,986 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🏎️ Engines</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏎️ Engines</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      margin: 0;
-      background: #f4f4f4;
-      color: #222;
-    }
+body {
+  margin: 0;
+  background: #f4f4f4;
+  color: #222;
+}
 
-    header {
-      background: #222;
-      color: white;
-      padding: 18px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      position: relative;
-    }
+header {
+  background: #222;
+  color: white;
+  padding: 18px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+}
 
-    .ticketButton {
-      position: absolute;
-      right: 12px;
-      top: 12px;
-      background: white;
-      color: #222;
-      border: none;
-      border-radius: 10px;
-      padding: 9px 11px;
-      font-size: 14px;
-      cursor: pointer;
-    }
+.ticketButton {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: white;
+  color: #222;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-size: 14px;
+  cursor: pointer;
+}
 
-    #engineList {
-      padding: 15px;
-      padding-bottom: 20px;
-    }
+.searchBox {
+  padding: 15px 15px 5px;
+}
 
-    .engine {
-      background: white;
-      border-radius: 15px;
-      margin-bottom: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-      overflow: hidden;
-    }
+.searchInput {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  background: white;
+}
 
-    .engineTitle {
-      padding: 16px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+#engineList {
+  padding: 10px 15px 100px;
+}
 
-    .engineContent {
-      padding: 0 15px 15px;
-    }
+.engine {
+  background: white;
+  border-radius: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
 
-    .engine input {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+.engineTitle {
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
 
-    .result {
-      background: #f1f1f1;
-      padding: 10px;
-      margin-top: 8px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+.engineContent {
+  padding: 0 15px 15px;
+}
 
-    .buttons {
-      margin-top: 10px;
-    }
+.engine input:not(.searchInput) {
+  width: 100%;
+  padding: 11px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+  color: #222;
+}
 
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 15px;
-      cursor: pointer;
-    }
+.result {
+  background: #f1f1f1;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+}
 
-    .addButton {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #222;
-      color: white;
-      font-size: 30px;
-      z-index: 10;
-    }
+.buttons {
+  margin-top: 10px;
+}
 
-    .deleteButton {
-      background: #e53935;
-      color: white;
-    }
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 15px;
+  cursor: pointer;
+}
 
-    .arrow {
-      transition: transform 0.2s;
-    }
+.addButton {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #222;
+  color: white;
+  font-size: 30px;
+  z-index: 10;
+}
 
-    .closed .arrow {
-      transform: rotate(-90deg);
-    }
+.deleteButton {
+  background: #e53935;
+  color: white;
+}
 
-    .grandTotal {
-      background: #222;
-      color: white;
-      margin: 15px;
-      padding: 18px;
-      border-radius: 15px;
-      margin-bottom: 100px;
-    }
+.arrow {
+  transition: transform 0.2s;
+}
 
-    .grandTotal h2 {
-      margin-top: 0;
-      text-align: center;
-    }
+.closed .arrow {
+  transform: rotate(-90deg);
+}
 
-    .totalRow {
-      display: flex;
-      justify-content: space-between;
-      padding: 7px 0;
-      border-bottom: 1px solid #555;
-    }
+.ticketOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 20;
+  padding: 20px;
+}
 
-    .totalRow:last-child {
-      border-bottom: none;
-    }
+.ticket {
+  background: white;
+  max-width: 400px;
+  margin: 50px auto;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
 
-    .totalProfit {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 8px;
-      display: flex;
-      justify-content: space-between;
-    }
+.ticket h2 {
+  text-align: center;
+  margin-top: 0;
+}
 
-    .ticketOverlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 20;
-      padding: 20px;
-    }
+.ticketRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
 
-    .ticket {
-      background: white;
-      max-width: 400px;
-      margin: 50px auto;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-    }
+.ticketProfit {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 15px;
+}
 
-    .ticket h2 {
-      text-align: center;
-      margin-top: 0;
-    }
+.closeTicket {
+  width: 100%;
+  margin-top: 18px;
+  background: #222;
+  color: white;
+}
 
-    .ticketRow {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .ticketProfit {
-      font-size: 22px;
-      font-weight: bold;
-      padding-top: 15px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .closeTicket {
-      width: 100%;
-      margin-top: 18px;
-      background: #222;
-      color: white;
-    }
-  </style>
+.noResults {
+  text-align: center;
+  padding: 30px 10px;
+  color: #777;
+  display: none;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    🏎️ Engines
+<header>
 
-    <button
-      class="ticketButton"
-      onclick="openTicket()"
-    >
-      🎟️ Ticket
-    </button>
-  </header>
-
-  <div id="engineList"></div>
-
-  <div class="grandTotal">
-
-    <h2>📊 Total</h2>
-
-    <div class="totalRow">
-      <span>Engines</span>
-      <strong id="totalEngines">0</strong>
-    </div>
-
-    <div class="totalRow">
-      <span>Total Purchase</span>
-      <strong id="totalPurchase">$0.00</strong>
-    </div>
-
-    <div class="totalRow">
-      <span>Total Sales</span>
-      <strong id="totalSales">$0.00</strong>
-    </div>
-
-    <div class="totalRow">
-      <span>Total Paid</span>
-      <strong id="totalPaid">$0.00</strong>
-    </div>
-
-    <div class="totalRow">
-      <span>Total Remaining</span>
-      <strong id="totalRemaining">$0.00</strong>
-    </div>
-
-    <div class="totalProfit">
-      <span>Total Profit</span>
-      <span id="totalProfit">$0.00</span>
-    </div>
-
-  </div>
+  🏎️ Engines
 
   <button
-    class="addButton"
-    onclick="addEngine()"
+    type="button"
+    class="ticketButton"
+    id="ticketButton"
   >
-    +
+    🎟️ Ticket
   </button>
 
-  <div
-    class="ticketOverlay"
-    id="ticketOverlay"
-    onclick="closeTicket(event)"
+</header>
+
+<div class="searchBox">
+
+  <input
+    type="search"
+    id="searchInput"
+    class="searchInput"
+    placeholder="🔍 Search engines..."
+    autocomplete="off"
   >
 
-    <div
-      class="ticket"
-      onclick="event.stopPropagation()"
-    >
+</div>
 
-      <h2>🎟️ Ticket</h2>
+<div id="engineList"></div>
 
-      <div class="ticketRow">
-        <span>Total Purchase</span>
-        <strong id="ticketPurchase">$0.00</strong>
-      </div>
+<div
+  id="noResults"
+  class="noResults"
+>
+  No engines found.
+</div>
 
-      <div class="ticketRow">
-        <span>Total Sales</span>
-        <strong id="ticketSales">$0.00</strong>
-      </div>
+<button
+  type="button"
+  class="addButton"
+  id="addButton"
+>
+  +
+</button>
 
-      <div class="ticketRow">
-        <span>Total Paid</span>
-        <strong id="ticketPaid">$0.00</strong>
-      </div>
 
-      <div class="ticketRow">
-        <span>Remaining</span>
-        <strong id="ticketRemaining">$0.00</strong>
-      </div>
+<!-- TICKET -->
 
-      <div class="ticketProfit">
-        <span>💰 Profit</span>
-        <span id="ticketProfit">$0.00</span>
-      </div>
+<div
+  class="ticketOverlay"
+  id="ticketOverlay"
+>
 
-      <button
-        class="closeTicket"
-        onclick="closeTicket()"
-      >
-        Close
-      </button>
+  <div class="ticket">
 
+    <h2>🎟️ Ticket</h2>
+
+    <div class="ticketRow">
+      <span>Total Engines</span>
+      <strong id="ticketEngines">0</strong>
     </div>
+
+    <div class="ticketRow">
+      <span>Total Purchase</span>
+      <strong id="ticketPurchase">$0.00</strong>
+    </div>
+
+    <div class="ticketRow">
+      <span>Total Sales</span>
+      <strong id="ticketSales">$0.00</strong>
+    </div>
+
+    <div class="ticketRow">
+      <span>Total Paid</span>
+      <strong id="ticketPaid">$0.00</strong>
+    </div>
+
+    <div class="ticketRow">
+      <span>Total Remaining</span>
+      <strong id="ticketRemaining">$0.00</strong>
+    </div>
+
+    <div class="ticketProfit">
+      <span>💰 Total Profit</span>
+      <span id="ticketProfit">$0.00</span>
+    </div>
+
+    <button
+      type="button"
+      class="closeTicket"
+      id="closeTicket"
+    >
+      Close
+    </button>
 
   </div>
 
-  <script>
+</div>
 
-    let engines =
-      JSON.parse(
-        localStorage.getItem("engines")
-      ) || [];
 
-    function save() {
-      localStorage.setItem(
-        "engines",
-        JSON.stringify(engines)
-      );
+<script>
+
+let engines =
+  JSON.parse(
+    localStorage.getItem("engines")
+  ) || [];
+
+
+/* SAVE */
+
+function save() {
+
+  localStorage.setItem(
+    "engines",
+    JSON.stringify(engines)
+  );
+
+}
+
+
+/* ADD ENGINE */
+
+document.getElementById(
+  "addButton"
+).addEventListener(
+  "click",
+  function() {
+
+    let newId = 1;
+
+    if (engines.length > 0) {
+
+      newId =
+        Math.max(
+          ...engines.map(
+            engine =>
+              Number(engine.id) || 0
+          )
+        ) + 1;
+
     }
 
-    function getTotals() {
+    engines.push({
 
-      let purchase = 0;
-      let sales = 0;
-      let paid = 0;
+      id: newId,
+      name: "",
+      purchasePrice: "",
+      salePrice: "",
+      amountPaid: ""
 
-      engines.forEach(engine => {
+    });
 
-        purchase +=
-          parseFloat(engine.purchasePrice) || 0;
-
-        sales +=
-          parseFloat(engine.salePrice) || 0;
-
-        paid +=
-          parseFloat(engine.amountPaid) || 0;
-
-      });
-
-      return {
-        purchase: purchase,
-        sales: sales,
-        paid: paid,
-        remaining: Math.max(sales - paid, 0),
-        profit: sales - purchase
-      };
-    }
-
-    function showEngines() {
-
-      const list =
-        document.getElementById("engineList");
-
-      list.innerHTML = "";
-
-      engines.forEach((engine, index) => {
-
-        const card =
-          document.createElement("div");
-
-        card.className = "engine";
-
-        card.innerHTML = `
-
-          <div
-            class="engineTitle"
-            onclick="openClose(${index})"
-          >
-
-            <span class="engineName">
-              🏎️ Engine #${engine.id}
-              ${engine.name
-                ? " - " + escapeHTML(engine.name)
-                : ""}
-            </span>
-
-            <span class="arrow">
-              ▼
-            </span>
-
-          </div>
-
-          <div
-            class="engineContent"
-            id="content${index}"
-          >
-
-            <input
-              type="text"
-              placeholder="Engine / Model"
-              value="${escapeAttribute(engine.name)}"
-              oninput="
-                updateEngine(
-                  ${index},
-                  'name',
-                  this.value
-                )
-              "
-            >
-
-            <input
-              type="number"
-              inputmode="decimal"
-              step="0.01"
-              placeholder="Purchase Price"
-              value="${escapeAttribute(engine.purchasePrice)}"
-              oninput="
-                updateEngine(
-                  ${index},
-                  'purchasePrice',
-                  this.value
-                )
-              "
-            >
-
-            <input
-              type="number"
-              inputmode="decimal"
-              step="0.01"
-              placeholder="Sale Price"
-              value="${escapeAttribute(engine.salePrice)}"
-              oninput="
-                updateEngine(
-                  ${index},
-                  'salePrice',
-                  this.value
-                )
-              "
-            >
-
-            <input
-              type="number"
-              inputmode="decimal"
-              step="0.01"
-              placeholder="Amount Paid"
-              value="${escapeAttribute(engine.amountPaid)}"
-              oninput="
-                updateEngine(
-                  ${index},
-                  'amountPaid',
-                  this.value
-                )
-              "
-            >
-
-            <div class="result">
-              💳 Remaining Balance:
-              <strong
-                id="remaining${index}"
-              >
-                $0.00
-              </strong>
-            </div>
-
-            <div class="result">
-              📈 Profit:
-              <strong
-                id="profit${index}"
-              >
-                $0.00
-              </strong>
-            </div>
-
-            <div class="buttons">
-
-              <button
-                class="deleteButton"
-                onclick="deleteEngine(${index})"
-              >
-                🗑️ Delete
-              </button>
-
-            </div>
-
-          </div>
-        `;
-
-        list.appendChild(card);
-
-        updateEngineResults(index);
-      });
-
-      updateTotals();
-    }
-
-    function updateEngine(
-      index,
-      field,
-      value
-    ) {
-
-      engines[index][field] = value;
-
-      save();
-
-      updateEngineResults(index);
-      updateTotals();
-    }
-
-    function updateEngineResults(index) {
-
-      const engine = engines[index];
-
-      if (!engine) return;
-
-      const purchase =
-        parseFloat(engine.purchasePrice) || 0;
-
-      const sale =
-        parseFloat(engine.salePrice) || 0;
-
-      const paid =
-        parseFloat(engine.amountPaid) || 0;
-
-      const remaining =
-        Math.max(sale - paid, 0);
-
-      const profit =
-        sale - purchase;
-
-      const remainingElement =
-        document.getElementById(
-          "remaining" + index
-        );
-
-      const profitElement =
-        document.getElementById(
-          "profit" + index
-        );
-
-      if (remainingElement) {
-        remainingElement.textContent =
-          "$" + remaining.toFixed(2);
-      }
-
-      if (profitElement) {
-        profitElement.textContent =
-          "$" + profit.toFixed(2);
-      }
-
-      const nameElement =
-        document.querySelector(
-          `#content${index}`
-        )?.parentElement
-          ?.querySelector(".engineName");
-
-      if (nameElement) {
-        nameElement.textContent =
-          "🏎️ Engine #" +
-          engine.id +
-          (engine.name
-            ? " - " + engine.name
-            : "");
-      }
-    }
-
-    function updateTotals() {
-
-      const totals = getTotals();
-
-      document.getElementById(
-        "totalEngines"
-      ).textContent =
-        engines.length;
-
-      document.getElementById(
-        "totalPurchase"
-      ).textContent =
-        "$" + totals.purchase.toFixed(2);
-
-      document.getElementById(
-        "totalSales"
-      ).textContent =
-        "$" + totals.sales.toFixed(2);
-
-      document.getElementById(
-        "totalPaid"
-      ).textContent =
-        "$" + totals.paid.toFixed(2);
-
-      document.getElementById(
-        "totalRemaining"
-      ).textContent =
-        "$" + totals.remaining.toFixed(2);
-
-      document.getElementById(
-        "totalProfit"
-      ).textContent =
-        "$" + totals.profit.toFixed(2);
-    }
-
-    function addEngine() {
-
-      let newId = 1;
-
-      if (engines.length > 0) {
-
-        newId =
-          Math.max(
-            ...engines.map(
-              engine => Number(engine.id) || 0
-            )
-          ) + 1;
-      }
-
-      engines.push({
-        id: newId,
-        name: "",
-        purchasePrice: "",
-        salePrice: "",
-        amountPaid: ""
-      });
-
-      save();
-      showEngines();
-    }
-
-    function deleteEngine(index) {
-
-      if (
-        confirm(
-          "Are you sure you want to delete this engine?"
-        )
-      ) {
-
-        engines.splice(index, 1);
-
-        save();
-        showEngines();
-      }
-    }
-
-    function openClose(index) {
-
-      const content =
-        document.getElementById(
-          "content" + index
-        );
-
-      const engine =
-        content.parentElement;
-
-      if (
-        content.style.display === "none"
-      ) {
-
-        content.style.display = "block";
-
-        engine.classList.remove(
-          "closed"
-        );
-
-      } else {
-
-        content.style.display = "none";
-
-        engine.classList.add(
-          "closed"
-        );
-      }
-    }
-
-    function openTicket() {
-
-      const totals = getTotals();
-
-      document.getElementById(
-        "ticketPurchase"
-      ).textContent =
-        "$" + totals.purchase.toFixed(2);
-
-      document.getElementById(
-        "ticketSales"
-      ).textContent =
-        "$" + totals.sales.toFixed(2);
-
-      document.getElementById(
-        "ticketPaid"
-      ).textContent =
-        "$" + totals.paid.toFixed(2);
-
-      document.getElementById(
-        "ticketRemaining"
-      ).textContent =
-        "$" + totals.remaining.toFixed(2);
-
-      document.getElementById(
-        "ticketProfit"
-      ).textContent =
-        "$" + totals.profit.toFixed(2);
-
-      document.getElementById(
-        "ticketOverlay"
-      ).style.display =
-        "block";
-    }
-
-    function closeTicket(event) {
-
-      if (
-        event &&
-        event.target.id !==
-        "ticketOverlay"
-      ) {
-        return;
-      }
-
-      document.getElementById(
-        "ticketOverlay"
-      ).style.display =
-        "none";
-    }
-
-    function escapeHTML(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function escapeAttribute(value) {
-      return escapeHTML(value);
-    }
+    save();
 
     showEngines();
 
-  </script>
+  }
+);
+
+
+/* SHOW ENGINES */
+
+function showEngines(
+  searchTerm = ""
+) {
+
+  const list =
+    document.getElementById(
+      "engineList"
+    );
+
+  const noResults =
+    document.getElementById(
+      "noResults"
+    );
+
+  list.innerHTML = "";
+
+
+  const search =
+    String(searchTerm)
+      .trim()
+      .toLowerCase();
+
+
+  let visibleEngines = 0;
+
+
+  engines.forEach(
+    engine => {
+
+      const name =
+        String(
+          engine.name || ""
+        ).toLowerCase();
+
+
+      if (
+        search &&
+        !name.includes(search)
+      ) {
+
+        return;
+
+      }
+
+
+      visibleEngines++;
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "engine";
+
+
+      card.innerHTML = `
+
+        <div class="engineTitle">
+
+          <span class="engineName">
+            ${
+              engine.name
+                ? escapeHTML(engine.name)
+                : "New Engine"
+            }
+          </span>
+
+          <span class="arrow">
+            ▼
+          </span>
+
+        </div>
+
+
+        <div class="engineContent">
+
+          <input
+            type="text"
+            class="nameInput"
+            placeholder="Engine / Model"
+            value="${escapeHTML(engine.name)}"
+          >
+
+          <input
+            type="number"
+            class="purchaseInput"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Purchase Price"
+            value="${escapeHTML(engine.purchasePrice)}"
+          >
+
+          <input
+            type="number"
+            class="saleInput"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Sale Price"
+            value="${escapeHTML(engine.salePrice)}"
+          >
+
+          <input
+            type="number"
+            class="paidInput"
+            inputmode="decimal"
+            step="0.01"
+            placeholder="Amount Paid"
+            value="${escapeHTML(engine.amountPaid)}"
+          >
+
+          <div class="result">
+
+            💳 Remaining Balance:
+
+            <strong class="remaining">
+              $0.00
+            </strong>
+
+          </div>
+
+
+          <div class="result">
+
+            📈 Profit:
+
+            <strong class="profit">
+              $0.00
+            </strong>
+
+          </div>
+
+
+          <div class="buttons">
+
+            <button
+              type="button"
+              class="deleteButton"
+            >
+              🗑️ Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      list.appendChild(card);
+
+
+      /* INPUTS */
+
+      const nameInput =
+        card.querySelector(
+          ".nameInput"
+        );
+
+      const purchaseInput =
+        card.querySelector(
+          ".purchaseInput"
+        );
+
+      const saleInput =
+        card.querySelector(
+          ".saleInput"
+        );
+
+      const paidInput =
+        card.querySelector(
+          ".paidInput"
+        );
+
+
+      nameInput.addEventListener(
+        "input",
+        function() {
+
+          engine.name =
+            this.value;
+
+          save();
+
+          card.querySelector(
+            ".engineName"
+          ).textContent =
+            engine.name ||
+            "New Engine";
+
+        }
+      );
+
+
+      purchaseInput.addEventListener(
+        "input",
+        function() {
+
+          engine.purchasePrice =
+            this.value;
+
+          save();
+
+          updateCard(
+            card,
+            engine
+          );
+
+        }
+      );
+
+
+      saleInput.addEventListener(
+        "input",
+        function() {
+
+          engine.salePrice =
+            this.value;
+
+          save();
+
+          updateCard(
+            card,
+            engine
+          );
+
+        }
+      );
+
+
+      paidInput.addEventListener(
+        "input",
+        function() {
+
+          engine.amountPaid =
+            this.value;
+
+          save();
+
+          updateCard(
+            card,
+            engine
+          );
+
+        }
+      );
+
+
+      /* DELETE */
+
+      const deleteButton =
+        card.querySelector(
+          ".deleteButton"
+        );
+
+      deleteButton.addEventListener(
+        "click",
+        function(event) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+
+          const engineId =
+            engine.id;
+
+
+          const confirmed =
+            confirm(
+              "Are you sure you want to delete this engine?"
+            );
+
+
+          if (!confirmed) {
+            return;
+          }
+
+
+          const deleteIndex =
+            engines.findIndex(
+              item =>
+                item.id === engineId
+            );
+
+
+          if (
+            deleteIndex !== -1
+          ) {
+
+            engines.splice(
+              deleteIndex,
+              1
+            );
+
+            save();
+
+            const currentSearch =
+              document.getElementById(
+                "searchInput"
+              ).value;
+
+            showEngines(
+              currentSearch
+            );
+
+          }
+
+        }
+      );
+
+
+      /* OPEN / CLOSE */
+
+      const title =
+        card.querySelector(
+          ".engineTitle"
+        );
+
+
+      title.addEventListener(
+        "click",
+        function() {
+
+          const content =
+            card.querySelector(
+              ".engineContent"
+            );
+
+
+          if (
+            content.style.display ===
+            "none"
+          ) {
+
+            content.style.display =
+              "block";
+
+            card.classList.remove(
+              "closed"
+            );
+
+          } else {
+
+            content.style.display =
+              "none";
+
+            card.classList.add(
+              "closed"
+            );
+
+          }
+
+        }
+      );
+
+
+      updateCard(
+        card,
+        engine
+      );
+
+    }
+  );
+
+
+  noResults.style.display =
+    visibleEngines === 0
+      ? "block"
+      : "none";
+
+}
+
+
+/* UPDATE CARD */
+
+function updateCard(
+  card,
+  engine
+) {
+
+  const purchase =
+    parseFloat(
+      engine.purchasePrice
+    ) || 0;
+
+  const sale =
+    parseFloat(
+      engine.salePrice
+    ) || 0;
+
+  const paid =
+    parseFloat(
+      engine.amountPaid
+    ) || 0;
+
+
+  const remaining =
+    Math.max(
+      sale - paid,
+      0
+    );
+
+
+  const profit =
+    sale - purchase;
+
+
+  card.querySelector(
+    ".remaining"
+  ).textContent =
+    "$" +
+    remaining.toFixed(2);
+
+
+  card.querySelector(
+    ".profit"
+  ).textContent =
+    "$" +
+    profit.toFixed(2);
+
+}
+
+
+/* SEARCH */
+
+document.getElementById(
+  "searchInput"
+).addEventListener(
+  "input",
+  function() {
+
+    showEngines(
+      this.value
+    );
+
+  }
+);
+
+
+/* TOTALS */
+
+function getTotals() {
+
+  let purchase = 0;
+  let sales = 0;
+  let paid = 0;
+
+
+  engines.forEach(
+    engine => {
+
+      purchase +=
+        parseFloat(
+          engine.purchasePrice
+        ) || 0;
+
+      sales +=
+        parseFloat(
+          engine.salePrice
+        ) || 0;
+
+      paid +=
+        parseFloat(
+          engine.amountPaid
+        ) || 0;
+
+    }
+  );
+
+
+  return {
+
+    purchase: purchase,
+
+    sales: sales,
+
+    paid: paid,
+
+    remaining:
+      Math.max(
+        sales - paid,
+        0
+      ),
+
+    profit:
+      sales - purchase
+
+  };
+
+}
+
+
+/* TICKET */
+
+document.getElementById(
+  "ticketButton"
+).addEventListener(
+  "click",
+  function() {
+
+    const totals =
+      getTotals();
+
+
+    document.getElementById(
+      "ticketEngines"
+    ).textContent =
+      engines.length;
+
+
+    document.getElementById(
+      "ticketPurchase"
+    ).textContent =
+      "$" +
+      totals.purchase.toFixed(2);
+
+
+    document.getElementById(
+      "ticketSales"
+    ).textContent =
+      "$" +
+      totals.sales.toFixed(2);
+
+
+    document.getElementById(
+      "ticketPaid"
+    ).textContent =
+      "$" +
+      totals.paid.toFixed(2);
+
+
+    document.getElementById(
+      "ticketRemaining"
+    ).textContent =
+      "$" +
+      totals.remaining.toFixed(2);
+
+
+    document.getElementById(
+      "ticketProfit"
+    ).textContent =
+      "$" +
+      totals.profit.toFixed(2);
+
+
+    document.getElementById(
+      "ticketOverlay"
+    ).style.display =
+      "block";
+
+  }
+);
+
+
+/* CLOSE TICKET */
+
+document.getElementById(
+  "closeTicket"
+).addEventListener(
+  "click",
+  function() {
+
+    document.getElementById(
+      "ticketOverlay"
+    ).style.display =
+      "none";
+
+  }
+);
+
+
+document.getElementById(
+  "ticketOverlay"
+).addEventListener(
+  "click",
+  function(event) {
+
+    if (
+      event.target ===
+      this
+    ) {
+
+      this.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(value) {
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* START */
+
+showEngines();
+
+</script>
 
 </body>
 </html>

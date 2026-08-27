@@ -4,14 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>MOTORS</title>
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif}
-body{background:#18191a;color:#eee;transition:.2s}
-button,input,textarea{font-family:inherit}
-button{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 
-body.light{background:#eee;color:#111}
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#18191a;
+    color:#eee;
+    transition:.2s;
+}
+
+button,input,textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+/* LIGHT MODE */
+
+body.light{
+    background:#eeeeee;
+    color:#111;
+}
+
 body.light .homeBtn,
 body.light .themeBtn,
 body.light .back,
@@ -29,936 +57,2105 @@ body.light .makeDropdown,
 body.light .makeOption,
 body.light .ticketRemove,
 body.light .deleteMotor,
-body.light .makeSearchInput{
-background:#fff;color:#111;border-color:#aaa
+body.light .ticketPreviewBtn{
+    background:#fff;
+    color:#111;
+    border-color:#aaa;
 }
+
 body.light .brandBtn.selected,
-body.light .ticketBrand.selected{background:#777;color:#fff}
+body.light .ticketBrand.selected{
+    background:#777;
+    color:#fff;
+}
 
-.page{display:none;min-height:100vh;padding:18px}
-#home{display:flex;align-items:center;justify-content:center}
+/* PAGES */
 
-.homeTop{position:absolute;top:15px;right:15px}
+.page{
+    display:none;
+    min-height:100vh;
+    padding:18px;
+}
+
+#home{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* HOME */
+
+.homeTop{
+    position:absolute;
+    top:15px;
+    right:15px;
+}
+
 .themeBtn{
-width:45px;height:45px;border:2px solid #555;border-radius:8px;
-background:#292b2d;color:#fff;font-size:21px
+    width:45px;
+    height:45px;
+    border:2px solid #555;
+    border-radius:8px;
+    background:#292b2d;
+    color:#fff;
+    font-size:21px;
 }
+
 .menu{
-width:310px;display:grid;grid-template-columns:1fr 1fr;gap:15px
+    width:310px;
+    max-width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
+
 .homeBtn{
-height:80px;border:2px solid #555;border-radius:8px;
-background:#303234;color:#fff;font-size:14px;font-weight:bold;
-box-shadow:0 4px 0 #0d0d0d
+    height:80px;
+    border:2px solid #555;
+    border-radius:8px;
+    background:#303234;
+    color:#fff;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 4px 0 #0d0d0d;
 }
-.homeBtn:active{transform:translateY(3px);box-shadow:0 1px 0 #0d0d0d}
-.addHome{grid-column:1/3}
+
+.homeBtn:active{
+    transform:translateY(3px);
+    box-shadow:0 1px 0 #0d0d0d;
+}
+
+.addHome{
+    grid-column:1/3;
+}
+
+/* HEADER */
 
 .header{
-position:relative;height:55px;display:flex;
-align-items:center;justify-content:center
+    position:relative;
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
-.title{font-size:22px;font-weight:900;letter-spacing:2px}
+
+.title{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
 .back{
-position:absolute;left:0;top:0;width:45px;height:45px;
-border:2px solid #555;border-radius:7px;background:#292b2d;
-color:#fff;font-size:24px
+    position:absolute;
+    left:0;
+    top:0;
+    width:45px;
+    height:45px;
+    border:2px solid #555;
+    border-radius:7px;
+    background:#292b2d;
+    color:#fff;
+    font-size:24px;
 }
 
-.searchTop{display:flex;gap:8px}
+/* SEARCH */
+
+.searchTop{
+    display:flex;
+    gap:8px;
+}
+
 .searchInput{
-flex:1;height:50px;padding:10px;border:2px solid #555;
-border-radius:7px;background:#292b2d;color:#fff;outline:none
+    flex:1;
+    height:50px;
+    padding:10px;
+    border:2px solid #555;
+    border-radius:7px;
+    background:#292b2d;
+    color:#fff;
+    outline:none;
 }
-.filterBtn{
-width:50px;height:50px;border:2px solid #555;border-radius:7px;
-background:#292b2d;color:#fff;font-size:22px
-}
-.brandPanel{
-display:none;margin-top:10px;padding:8px;border:1px solid #555;
-border-radius:7px;background:#222;grid-template-columns:1fr 1fr;gap:6px
-}
-.brandPanel.show{display:grid}
-.brandBtn{
-min-height:43px;border:1px solid #555;border-radius:6px;
-background:#303234;color:#fff;font-size:11px;font-weight:bold
-}
-.brandBtn.selected{background:#999;color:#111}
 
-.motorList{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.filterBtn{
+    width:50px;
+    height:50px;
+    border:2px solid #555;
+    border-radius:7px;
+    background:#292b2d;
+    color:#fff;
+    font-size:22px;
+}
+
+.brandPanel{
+    display:none;
+    margin-top:10px;
+    padding:8px;
+    border:1px solid #555;
+    border-radius:7px;
+    background:#222;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+}
+
+.brandPanel.show{
+    display:grid;
+}
+
+.brandBtn{
+    min-height:43px;
+    border:1px solid #555;
+    border-radius:6px;
+    background:#303234;
+    color:#fff;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.brandBtn.selected{
+    background:#999;
+    color:#111;
+}
+
+/* MOTOR CARDS */
+
+.motorList{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
 .motorCard{
-padding:14px;border:1px solid #555;border-left:4px solid #aaa;
-border-radius:7px;background:#292b2d
+    padding:14px;
+    border:1px solid #555;
+    border-left:4px solid #aaa;
+    border-radius:7px;
+    background:#292b2d;
 }
-.motorTitle{font-size:18px;font-weight:bold}
-.motorInfo{margin-top:5px;color:#aaa;font-size:13px}
-.motorDescription{margin-top:9px;color:#ccc;line-height:1.4}
-.motorPrice{margin-top:10px;font-weight:bold}
+
+.motorTitle{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.motorInfo{
+    margin-top:5px;
+    color:#aaa;
+    font-size:13px;
+}
+
+.motorDescription{
+    margin-top:9px;
+    color:#ccc;
+    line-height:1.4;
+}
+
+.motorPrice{
+    margin-top:10px;
+    font-weight:bold;
+}
+
 .deleteMotor{
-width:100%;height:42px;margin-top:12px;border:1px solid #555;
-border-radius:6px;background:#202122;color:#ddd;font-weight:bold
+    width:100%;
+    height:42px;
+    margin-top:12px;
+    border:1px solid #555;
+    border-radius:6px;
+    background:#202122;
+    color:#ddd;
+    font-weight:bold;
 }
+
+/* TICKET */
 
 .ticketPreviewBtn{
-position:absolute;right:0;top:2px;height:38px;padding:0 9px;
-border:1px solid #555;border-radius:6px;background:#303234;
-color:#fff;font-size:9px;font-weight:bold
+    position:absolute;
+    right:0;
+    top:2px;
+    height:38px;
+    padding:0 9px;
+    border:1px solid #555;
+    border-radius:6px;
+    background:#303234;
+    color:#fff;
+    font-size:9px;
+    font-weight:bold;
 }
+
 .ticketBrands{
-display:flex;gap:7px;overflow-x:auto;padding:8px 0 12px
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    padding:8px 0 12px;
 }
+
 .ticketBrand{
-flex:0 0 auto;min-width:85px;height:38px;border:1px solid #555;
-border-radius:6px;background:#292b2d;color:#fff;font-size:10px;font-weight:bold
+    flex:0 0 auto;
+    min-width:85px;
+    height:38px;
+    border:1px solid #555;
+    border-radius:6px;
+    background:#292b2d;
+    color:#fff;
+    font-size:10px;
+    font-weight:bold;
 }
-.ticketBrand.selected{background:#999;color:#111}
-.ticketList{display:flex;flex-direction:column;gap:10px}
+
+.ticketBrand.selected{
+    background:#999;
+    color:#111;
+}
+
+.ticketList{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
 .ticketCard{
-display:flex;align-items:center;justify-content:space-between;
-padding:13px;border:1px solid #555;border-radius:7px;background:#292b2d
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px;
+    border:1px solid #555;
+    border-radius:7px;
+    background:#292b2d;
 }
+
 .ticketRemove{
-width:40px;height:40px;border:1px solid #555;border-radius:6px;
-background:#202122;color:#fff;font-size:20px
+    width:40px;
+    height:40px;
+    border:1px solid #555;
+    border-radius:6px;
+    background:#202122;
+    color:#fff;
+    font-size:20px;
 }
 
-.form{max-width:750px;margin:auto}
-.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:flex;flex-direction:column;gap:6px;min-width:0}
-.field label{color:#aaa;font-size:11px;font-weight:bold}
-.field input,.field textarea{
-width:100%;min-height:50px;padding:11px;border:2px solid #555;
-border-radius:7px;background:#292b2d;color:#fff;outline:none
-}
-.field textarea{min-height:140px;resize:vertical}
-.descriptionField{grid-column:1/3}
+/* ADD ITEM */
 
-.makeBox{position:relative;width:100%}
+.form{
+    max-width:750px;
+    margin:auto;
+}
+
+.formGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field label{
+    color:#aaa;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.field input,
+.field textarea{
+    width:100%;
+    min-height:50px;
+    padding:11px;
+    border:2px solid #555;
+    border-radius:7px;
+    background:#292b2d;
+    color:#fff;
+    outline:none;
+}
+
+.field textarea{
+    min-height:140px;
+    resize:vertical;
+}
+
+.descriptionField{
+    grid-column:1/3;
+}
+
 .makeSearchButton{
-width:100%;min-height:50px;padding:11px;border:2px solid #555;
-border-radius:7px;background:#292b2d;color:#aaa;text-align:left;
-overflow:hidden
+    width:100%;
+    min-height:50px;
+    padding:11px;
+    border:2px solid #555;
+    border-radius:7px;
+    background:#292b2d;
+    color:#aaa;
+    text-align:left;
 }
-.makeSearchButton.active{color:#fff}
-.makeSearchButton span{
-display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+
+.makeSearchButton.active{
+    color:#fff;
 }
-.selectedMake{color:#999;font-size:11px}
+
+.selectedMake{
+    color:#999;
+    font-size:11px;
+    min-height:13px;
+}
+
+.saveItem{
+    width:100%;
+    height:55px;
+    margin-top:20px;
+    border:2px solid #777;
+    border-radius:7px;
+    background:#888;
+    color:#111;
+    font-weight:900;
+}
+
+/* MAKE DROPDOWN */
 
 .makeDropdown{
-display:none;position:absolute;z-index:50;left:0;right:0;
-top:calc(100% + 5px);max-height:240px;overflow-y:auto;padding:7px;
-border:2px solid #555;border-radius:8px;background:#202223;
-box-shadow:0 8px 20px rgba(0,0,0,.45)
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:18px;
+    right:18px;
+    top:100px;
+    max-height:65vh;
+    overflow-y:auto;
+    padding:7px;
+    border:2px solid #555;
+    border-radius:8px;
+    background:#202223;
 }
-.makeDropdown.show{display:block}
+
+.makeDropdown.show{
+    display:block;
+}
+
 .makeSearchInput{
-width:100%;height:44px;margin-bottom:8px;padding:10px;
-border:2px solid #555;border-radius:7px;background:#292b2d;
-color:#fff;outline:none
+    width:100%;
+    height:48px;
+    margin-bottom:8px;
+    padding:10px;
+    border:2px solid #555;
+    border-radius:7px;
+    background:#292b2d;
+    color:#fff;
+    outline:none;
 }
+
 .makeOption{
-width:100%;min-height:44px;margin-bottom:5px;border:1px solid #555;
-border-radius:6px;background:#303234;color:#fff;text-align:left;padding:0 11px
+    width:100%;
+    min-height:44px;
+    margin-bottom:5px;
+    border:1px solid #555;
+    border-radius:6px;
+    background:#303234;
+    color:#fff;
+    text-align:left;
+    padding:0 11px;
 }
-.saveItem{
-width:100%;height:55px;margin-top:20px;border:2px solid #777;
-border-radius:7px;background:#888;color:#111;font-weight:900
-}
+
+/* EMPTY */
 
 .empty{
-min-height:60vh;display:flex;align-items:center;
-justify-content:center;color:#777
+    min-height:60vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#777;
 }
+
+/* PREVIEW */
 
 .preview{
-display:none;position:fixed;z-index:1000;inset:0;padding:30px 12px;
-background:rgba(0,0,0,.82);align-items:flex-start;justify-content:center
+    display:none;
+    position:fixed;
+    z-index:10000;
+    inset:0;
+    padding:30px 12px;
+    background:rgba(0,0,0,.82);
+    align-items:flex-start;
+    justify-content:center;
 }
-.preview.show{display:flex}
+
+.preview.show{
+    display:flex;
+}
+
 .receipt{
-width:380px;max-width:100%;max-height:90vh;overflow:auto;padding:20px;
-background:#fff;color:#111;font-family:monospace
+    width:380px;
+    max-width:100%;
+    max-height:90vh;
+    overflow:auto;
+    padding:20px;
+    background:#fff;
+    color:#111;
+    font-family:monospace;
 }
-.receiptTitle{text-align:center;font-size:20px;font-weight:bold;margin-bottom:18px}
-.receiptItem{padding:10px 0;border-bottom:1px dashed #777}
-.receiptTotal{margin-top:14px;padding-top:10px;border-top:2px solid #111;font-weight:bold}
+
+.receiptTitle{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.receiptItem{
+    padding:10px 0;
+    border-bottom:1px dashed #777;
+}
+
+.receiptTotal{
+    margin-top:14px;
+    padding-top:10px;
+    border-top:2px solid #111;
+    font-weight:bold;
+}
+
 .printBtn{
-width:100%;height:43px;margin-top:15px;border:0;border-radius:5px;
-background:#222;color:#fff;font-weight:bold
+    width:100%;
+    height:43px;
+    margin-top:15px;
+    border:0;
+    border-radius:5px;
+    background:#222;
+    color:#fff;
+    font-weight:bold;
 }
+
+/* MOBILE */
 
 @media(max-width:550px){
-.formGrid{grid-template-columns:1fr}
-.descriptionField{grid-column:auto}
+
+    .formGrid{
+        grid-template-columns:1fr;
+    }
+
+    .descriptionField{
+        grid-column:auto;
+    }
+
+    .ticketPreviewBtn{
+        font-size:8px;
+        padding:0 6px;
+    }
 }
 
+/* PRINT */
+
 @media print{
-body *{visibility:hidden}
-.preview,.preview *{visibility:visible}
-.preview{position:absolute;inset:0;padding:0;background:#fff}
-.receipt{width:100%;max-height:none}
-.printBtn{display:none}
+
+    body *{
+        visibility:hidden;
+    }
+
+    .preview,
+    .preview *{
+        visibility:visible;
+    }
+
+    .preview{
+        position:absolute;
+        inset:0;
+        padding:0;
+        background:#fff;
+    }
+
+    .receipt{
+        width:100%;
+        max-height:none;
+    }
+
+    .printBtn{
+        display:none;
+    }
 }
 </style>
 </head>
+
 <body>
 
 <div id="home" class="page">
-<div class="homeTop">
-<button id="themeBtn" class="themeBtn">🌙</button>
-</div>
-<div class="menu">
-<button class="homeBtn" data-page="search">SEARCH</button>
-<button class="homeBtn" data-page="ticket">TICKET</button>
-<button class="homeBtn" data-page="buy">BUY$</button>
-<button class="homeBtn" data-page="sales">SALES$</button>
-<button class="homeBtn addHome" data-page="add">ADD ITEM</button>
-</div>
+
+    <div class="homeTop">
+        <button id="themeBtn" class="themeBtn">🌙</button>
+    </div>
+
+    <div class="menu">
+
+        <button class="homeBtn" data-page="search">
+            SEARCH
+        </button>
+
+        <button class="homeBtn" data-page="ticket">
+            TICKET
+        </button>
+
+        <button class="homeBtn" data-page="buy">
+            BUY$
+        </button>
+
+        <button class="homeBtn" data-page="sales">
+            SALES$
+        </button>
+
+        <button class="homeBtn addHome" data-page="add">
+            ADD ITEM
+        </button>
+
+    </div>
 </div>
 
 <div id="search" class="page">
-<div class="header">
-<button class="back" data-home>←</button>
-<div class="title">SEARCH</div>
-</div>
-<div class="searchTop">
-<input id="searchInput" class="searchInput" placeholder="Search all motors...">
-<button id="filterBtn" class="filterBtn">☰</button>
-</div>
-<div id="brandPanel" class="brandPanel"></div>
-<div id="searchResults" class="motorList"></div>
+
+    <div class="header">
+
+        <button class="back" data-home>←</button>
+
+        <div class="title">SEARCH</div>
+
+    </div>
+
+    <div class="searchTop">
+
+        <input
+            id="searchInput"
+            class="searchInput"
+            placeholder="Search all motors..."
+            autocomplete="off"
+        >
+
+        <button id="filterBtn" class="filterBtn">
+            ☰
+        </button>
+
+    </div>
+
+    <div id="brandPanel" class="brandPanel"></div>
+
+    <div id="searchResults" class="motorList"></div>
+
 </div>
 
 <div id="ticket" class="page">
-<div class="header">
-<button class="back" data-home>←</button>
-<div class="title">TICKET</div>
-<button id="ticketPreviewBtn" class="ticketPreviewBtn">TICKET PREVIEW</button>
-</div>
-<div id="ticketBrands" class="ticketBrands"></div>
-<div id="ticketList" class="ticketList"></div>
+
+    <div class="header">
+
+        <button class="back" data-home>←</button>
+
+        <div class="title">TICKET</div>
+
+        <button id="ticketPreviewBtn" class="ticketPreviewBtn">
+            TICKET PREVIEW
+        </button>
+
+    </div>
+
+    <div id="ticketBrands" class="ticketBrands"></div>
+
+    <div id="ticketList" class="ticketList"></div>
+
 </div>
 
-<div id="buy" class="page">
-<div class="header">
-<button class="back" data-home>←</button>
-<div class="title">BUY$</div>
-</div>
-<div class="empty">BUY$ MENU</div>
+<div id="buyPage" class="page">
+
+    <div class="header">
+
+        <button class="back" data-home>←</button>
+
+        <div class="title">BUY$</div>
+
+    </div>
+
+    <div class="empty">
+        BUY$ MENU
+    </div>
+
 </div>
 
 <div id="sales" class="page">
-<div class="header">
-<button class="back" data-home>←</button>
-<div class="title">SALES$</div>
-</div>
-<div class="empty">SALES$ MENU</div>
+
+    <div class="header">
+
+        <button class="back" data-home>←</button>
+
+        <div class="title">SALES$</div>
+
+    </div>
+
+    <div class="empty">
+        SALES$ MENU
+    </div>
+
 </div>
 
 <div id="add" class="page">
-<div class="header">
-<button class="back" data-home>←</button>
-<div class="title">ADD ITEM</div>
+
+    <div class="header">
+
+        <button class="back" data-home>←</button>
+
+        <div class="title">ADD ITEM</div>
+
+    </div>
+
+    <div class="form">
+
+        <div class="formGrid">
+
+            <div class="field">
+                <label>MODEL</label>
+                <input
+                    id="model"
+                    type="text"
+                    placeholder="Model"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="field">
+                <label>YEAR</label>
+                <input
+                    id="year"
+                    type="number"
+                    placeholder="Year"
+                    inputmode="numeric"
+                >
+            </div>
+
+            <div class="field">
+                <label>MAKE</label>
+
+                <button id="makeOpen" class="makeSearchButton">
+                    Select make...
+                </button>
+
+                <div id="selectedMake" class="selectedMake">
+                    No make selected
+                </div>
+
+            </div>
+
+            <div class="field">
+                <label>SALE$</label>
+                <input
+                    id="sale"
+                    type="number"
+                    step="0.01"
+                    placeholder="Sale$"
+                    inputmode="decimal"
+                >
+            </div>
+
+            <div class="field">
+                <label>BUY$</label>
+                <input
+                    id="buyPrice"
+                    type="number"
+                    step="0.01"
+                    placeholder="Buy$"
+                    inputmode="decimal"
+                >
+            </div>
+
+            <div class="field descriptionField">
+                <label>DESCRIPTION</label>
+                <textarea
+                    id="description"
+                    placeholder="Description"
+                ></textarea>
+            </div>
+
+        </div>
+
+        <button id="saveItem" class="saveItem">
+            SAVE ITEM
+        </button>
+
+    </div>
 </div>
-
-<div class="form">
-<div class="formGrid">
-
-<div class="field">
-<label>MODEL</label>
-<input id="model" type="text" placeholder="Model">
-</div>
-
-<div class="field">
-<label>YEAR</label>
-<input id="year" type="number" placeholder="Year">
-</div>
-
-<div class="field">
-<label>MAKE</label>
-<div class="makeBox">
-<button id="makeOpen" class="makeSearchButton">
-<span id="makeButtonText">Select make...</span>
-</button>
 
 <div id="makeDropdown" class="makeDropdown">
-<input id="makeSearchInput" class="makeSearchInput"
-placeholder="Search make..." autocomplete="off">
-<div id="makeOptions"></div>
-</div>
-</div>
 
-<div id="selectedMake" class="selectedMake">No make selected</div>
-</div>
+    <input
+        id="makeSearchInput"
+        class="makeSearchInput"
+        placeholder="Search make..."
+        autocomplete="off"
+    >
 
-<div class="field">
-<label>SALE$</label>
-<input id="sale" type="number" step="0.01" placeholder="Sale$">
-</div>
+    <div id="makeOptions"></div>
 
-<div class="field">
-<label>BUY$</label>
-<input id="buyPrice" type="number" step="0.01"></div>
-
-<div class="field descriptionField">
-<label>DESCRIPTION</label>
-<textarea id="description" placeholder="Description"></textarea>
-</div>
-
-</div>
-
-<button id="saveItem" class="saveItem">SAVE ITEM</button>
-</div>
 </div>
 
 <div id="preview" class="preview">
-<div class="receipt">
-<div class="receiptTitle">MOTORS</div>
-<div id="receiptItems"></div>
-<div class="receiptTotal">TOTAL: $<span id="receiptTotal">0.00</span></div>
-<button id="printBtn" class="printBtn">PRINT</button>
-</div>
+
+    <div class="receipt">
+
+        <div class="receiptTitle">
+            MOTORS
+        </div>
+
+        <div id="receiptItems"></div>
+
+        <div class="receiptTotal">
+            TOTAL: $
+            <span id="receiptTotal">0.00</span>
+        </div>
+
+        <button id="printBtn" class="printBtn">
+            PRINT
+        </button>
+
+    </div>
+
 </div>
 <script>
-const BRANDS=[
-["Toyota","TOY"],["Ford","FORD"],["Chevrolet","CHEV"],
-["BMW","BMW"],["Mercedes-Benz","MERC"],["Audi","AUDI"],
-["Honda","HON"],["Nissan","NIS"],["Kia","KIA"],["Hyundai","HYUN"],
-["Ram","RAM"],["GMC","GMC"],["Dodge","DOD"],["Jeep","JEEP"],
-["Tesla","TES"],["Lexus","LEX"],["Volkswagen","VW"],["Subaru","SUB"],
-["Mazda","MAZ"],["Volvo","VOL"],["Acura","ACU"],["Infiniti","INF"],
-["Cadillac","CAD"],["Porsche","POR"],["Lamborghini","LAM"],
-["Ferrari","FER"],["Maserati","MAS"]
+
+/* =====================================================
+   BRANDS
+===================================================== */
+
+const BRANDS = [
+
+    ["Toyota","TOY"],
+    ["Ford","FORD"],
+    ["Chevrolet","CHEV"],
+    ["BMW","BMW"],
+    ["Mercedes-Benz","MERC"],
+    ["Audi","AUDI"],
+    ["Honda","HON"],
+    ["Nissan","NIS"],
+    ["Kia","KIA"],
+    ["Hyundai","HYUN"],
+    ["Ram","RAM"],
+    ["GMC","GMC"],
+    ["Dodge","DOD"],
+    ["Jeep","JEEP"],
+    ["Tesla","TES"],
+    ["Lexus","LEX"],
+    ["Volkswagen","VW"],
+    ["Subaru","SUB"],
+    ["Mazda","MAZ"],
+    ["Volvo","VOL"],
+    ["Acura","ACU"],
+    ["Infiniti","INF"],
+    ["Cadillac","CAD"],
+    ["Porsche","POR"],
+    ["Lamborghini","LAM"],
+    ["Ferrari","FER"],
+    ["Maserati","MAS"]
+
 ];
 
-let motors=readArray("motors");
-let ticket=readArray("ticket");
-let selectedBrands=[];
-let ticketBrandsSelected=[];
-let selectedMake="";
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let motors = readArray("motors");
+let ticket = readArray("ticket");
+
+let selectedBrands = [];
+let ticketBrandsSelected = [];
+let selectedMake = "";
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
 
 function readArray(key){
-try{
-const value=localStorage.getItem(key);
-if(!value)return[];
-const parsed=JSON.parse(value);
-return Array.isArray(parsed)?parsed:[];
-}catch(e){return[]}
+
+    try{
+
+        const value = localStorage.getItem(key);
+
+        if(!value){
+            return [];
+        }
+
+        const parsed = JSON.parse(value);
+
+        return Array.isArray(parsed) ? parsed : [];
+
+    }catch(error){
+
+        console.error("Storage error:",error);
+
+        return [];
+
+    }
 }
+
 
 function saveAll(){
-localStorage.setItem("motors",JSON.stringify(motors));
-localStorage.setItem("ticket",JSON.stringify(ticket));
+
+    localStorage.setItem(
+        "motors",
+        JSON.stringify(motors)
+    );
+
+    localStorage.setItem(
+        "ticket",
+        JSON.stringify(ticket)
+    );
 }
+
+
+/* =====================================================
+   SAFE HTML
+===================================================== */
 
 function safe(value){
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
 }
 
+
+/* =====================================================
+   MAKE NORMALIZATION
+===================================================== */
+
 function normalizeMake(make){
-const text=String(make||"").trim();
-const found=BRANDS.find(b=>
-b[0].toLowerCase()===text.toLowerCase()||
-b[1].toLowerCase()===text.toLowerCase()
-);
-return found?found[0]:text;
+
+    const value = String(make ?? "");
+
+    const found = BRANDS.find(
+        brand =>
+            brand[0].toLowerCase() === value.toLowerCase() ||
+            brand[1].toLowerCase() === value.toLowerCase()
+    );
+
+    return found ? found[0] : value;
+
 }
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 function openPage(name){
 
-document.querySelectorAll(".page").forEach(page=>{
-page.style.display="none";
-});
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
 
-const page=document.getElementById(name);
-if(!page)return;
+            page.style.display = "none";
 
-page.style.display=name==="home"?"flex":"block";
+        });
 
-closeMakeMenu();
 
-if(name==="search"){
-renderBrands();
-renderSearch();
+    let pageName = name;
+
+    if(name === "buy"){
+        pageName = "buyPage";
+    }
+
+
+    const page = document.getElementById(pageName);
+
+    if(!page){
+        console.error("Page not found:",pageName);
+        return;
+    }
+
+
+    if(pageName === "home"){
+
+        page.style.display = "flex";
+
+    }else{
+
+        page.style.display = "block";
+
+    }
+
+
+    closeMakeMenu();
+
+
+    if(name === "search"){
+
+        renderBrands();
+        renderSearch();
+
+    }
+
+
+    if(name === "ticket"){
+
+        renderTicketBrands();
+        renderTicket();
+
+    }
+
+
+    if(name === "add"){
+
+        selectedMake = "";
+
+        document.getElementById("selectedMake").textContent =
+            "No make selected";
+
+    }
+
 }
 
-if(name==="ticket"){
-renderTicketBrands();
-renderTicket();
-}
-}
+
+/* =====================================================
+   HOME BUTTONS
+===================================================== */
 
 document.addEventListener("click",function(e){
 
-const homeButton=e.target.closest(".homeBtn");
+    const button = e.target.closest(".homeBtn");
 
-if(homeButton){
-openPage(homeButton.dataset.page);
-return;
-}
+    if(!button){
+        return;
+    }
 
-if(e.target.closest("[data-home]")){
-openPage("home");
-return;
-}
+    const page = button.dataset.page;
 
-const deleteButton=e.target.closest(".deleteMotor");
-
-if(deleteButton){
-const id=deleteButton.dataset.id;
-deleteMotor(id);
-return;
-}
-
-const removeTicket=e.target.closest(".ticketRemove");
-
-if(removeTicket){
-removeFromTicket(removeTicket.dataset.id);
-return;
-}
-
-const ticketBrand=e.target.closest(".ticketBrand");
-
-if(ticketBrand){
-toggleTicketBrand(ticketBrand.dataset.brand);
-return;
-}
-
-const brandButton=e.target.closest(".brandBtn");
-
-if(brandButton){
-toggleSearchBrand(brandButton.dataset.brand);
-return;
-}
-
-const makeOption=e.target.closest(".makeOption");
-
-if(makeOption){
-selectMake(makeOption.dataset.make);
-return;
-}
+    openPage(page);
 
 });
+
+
+/* =====================================================
+   BACK BUTTONS
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+    const button = e.target.closest("[data-home]");
+
+    if(!button){
+        return;
+    }
+
+    closeMakeMenu();
+    openPage("home");
+
+});
+
+
+/* =====================================================
+   THEME
+===================================================== */
 
 function loadTheme(){
 
-const light=localStorage.getItem("theme")==="light";
+    const light =
+        localStorage.getItem("theme") === "light";
 
-document.body.classList.toggle("light",light);
 
-document.getElementById("themeBtn").textContent=
-light?"☀️":"🌙";
+    document.body.classList.toggle(
+        "light",
+        light
+    );
+
+
+    const button =
+        document.getElementById("themeBtn");
+
+
+    if(button){
+
+        button.textContent =
+            light ? "☀️" : "🌙";
+
+    }
+
 }
 
-document.getElementById("themeBtn").addEventListener("click",function(){
 
-const light=!document.body.classList.contains("light");
+document
+    .getElementById("themeBtn")
+    .addEventListener("click",function(){
 
-document.body.classList.toggle("light",light);
+        const light =
+            !document.body.classList.contains("light");
 
-localStorage.setItem("theme",light?"light":"dark");
 
-this.textContent=light?"☀️":"🌙";
-});
+        document.body.classList.toggle(
+            "light",
+            light
+        );
 
-function toggleSearchBrand(name){
 
-const index=selectedBrands.indexOf(name);
+        localStorage.setItem(
+            "theme",
+            light ? "light" : "dark"
+        );
 
-if(index===-1)selectedBrands.push(name);
-else selectedBrands.splice(index,1);
 
-renderBrands();
-renderSearch();
-}
+        this.textContent =
+            light ? "☀️" : "🌙";
 
-document.getElementById("filterBtn").addEventListener("click",function(){
-document.getElementById("brandPanel").classList.toggle("show");
-renderBrands();
-});
+    });
+
+
+/* =====================================================
+   SEARCH FILTER
+===================================================== */
+
+document
+    .getElementById("filterBtn")
+    .addEventListener("click",function(){
+
+        const panel =
+            document.getElementById("brandPanel");
+
+
+        panel.classList.toggle("show");
+
+        renderBrands();
+
+    });
+
 
 function renderBrands(){
 
-const panel=document.getElementById("brandPanel");
+    const panel =
+        document.getElementById("brandPanel");
 
-panel.innerHTML=BRANDS.map(brand=>{
 
-const name=brand[0];
-const selected=selectedBrands.includes(name);
+    panel.innerHTML =
+        BRANDS.map(brand => {
 
-return `
-<button class="brandBtn ${selected?"selected":""}"
-data-brand="${safe(name)}">
-${safe(name)}
-</button>
-`;
+            const name = brand[0];
 
-}).join("");
-}
+            const selected =
+                selectedBrands.includes(name);
 
-document.getElementById("searchInput").addEventListener("input",renderSearch);
 
-function renderSearch(){
+            return `
+                <button
+                    type="button"
+                    class="brandBtn ${selected ? "selected" : ""}"
+                    data-brand="${safe(name)}">
+                    ${safe(name)}
+                </button>
+            `;
 
-const query=document.getElementById("searchInput").value.toLowerCase().trim();
-
-const results=motors.filter(motor=>{
-
-const make=normalizeMake(motor.make);
-
-const text=(
-motor.model+" "+
-motor.year+" "+
-make+" "+
-motor.description
-).toLowerCase();
-
-const searchOK=text.includes(query);
-
-const brandOK=
-selectedBrands.length===0||
-selectedBrands.includes(make);
-
-return searchOK&&brandOK;
-});
-
-const box=document.getElementById("searchResults");
-
-if(!results.length){
-box.innerHTML=`<div class="empty">NO MOTORS FOUND</div>`;
-return;
-}
-
-box.innerHTML=results.map(motor=>{
-
-return `
-<div class="motorCard">
-
-<div class="motorTitle">${safe(motor.model)}</div>
-
-<div class="motorInfo">
-${safe(motor.year)} • ${safe(normalizeMake(motor.make))}
-</div>
-
-<div class="motorDescription">
-${safe(motor.description)}
-</div>
-
-<div class="motorPrice">
-SALE: $${Number(motor.sale||0).toFixed(2)}
-&nbsp; | &nbsp;
-BUY: $${Number(motor.buy||0).toFixed(2)}
-</div>
-
-<button class="deleteMotor" data-id="${safe(motor.id)}">
-DELETE
-</button>
-
-</div>
-`;
-
-}).join("");
-}
-  function deleteMotor(id){
-
-const index=motors.findIndex(m=>String(m.id)===String(id));
-
-if(index===-1)return;
-
-motors.splice(index,1);
-
-ticket=ticket.filter(id2=>String(id2)!==String(id));
-
-saveAll();
-
-renderSearch();
-renderTicketBrands();
-renderTicket();
-}
-
-function getInventoryBrands(){
-
-const names=[];
-
-motors.forEach(motor=>{
-
-const make=normalizeMake(motor.make);
-
-if(make && !names.includes(make)){
-names.push(make);
-}
-
-});
-
-return names;
-}
-
-function renderTicketBrands(){
-
-const box=document.getElementById("ticketBrands");
-
-const available=getInventoryBrands();
-
-ticketBrandsSelected=ticketBrandsSelected.filter(
-brand=>available.includes(brand)
-);
-
-if(!available.length){
-box.innerHTML=`<div class="empty" style="min-height:auto;padding:20px">
-NO BRANDS IN INVENTORY
-</div>`;
-return;
-}
-
-box.innerHTML=available.map(name=>{
-
-const selected=ticketBrandsSelected.includes(name);
-
-return `
-<button
-class="ticketBrand ${selected?"selected":""}"
-data-brand="${safe(name)}">
-${safe(name)}
-</button>
-`;
-
-}).join("");
-}
-
-function toggleTicketBrand(name){
-
-const index=ticketBrandsSelected.indexOf(name);
-
-if(index===-1){
-ticketBrandsSelected.push(name);
-}else{
-ticketBrandsSelected.splice(index,1);
-}
-
-renderTicketBrands();
-renderTicket();
-}
-
-function renderTicket(){
-
-const box=document.getElementById("ticketList");
-
-let available=motors.filter(motor=>{
-const make=normalizeMake(motor.make);
-
-return ticketBrandsSelected.length===0||
-ticketBrandsSelected.includes(make);
-});
-
-if(!available.length){
-box.innerHTML=`<div class="empty">NO MOTORS FOUND</div>`;
-return;
-}
-
-box.innerHTML=available.map(motor=>{
-
-const inTicket=ticket.some(
-id=>String(id)===String(motor.id)
-);
-
-return `
-<div class="ticketCard">
-
-<div>
-<strong>${safe(motor.model)}</strong><br>
-<small>
-${safe(motor.year)} • ${safe(normalizeMake(motor.make))}
-</small><br>
-<small>
-$${Number(motor.sale||0).toFixed(2)}
-</small>
-</div>
-
-<button
-class="ticketRemove"
-data-id="${safe(motor.id)}">
-${inTicket?"−":"+"}
-</button>
-
-</div>
-`;
-
-}).join("");
-}
-
-function removeFromTicket(id){
-
-const index=ticket.findIndex(
-item=>String(item)===String(id)
-);
-
-if(index===-1){
-ticket.push(id);
-}else{
-ticket.splice(index,1);
-}
-
-saveAll();
-renderTicket();
-}
-
-function openMakeMenu(){
-
-const dropdown=document.getElementById("makeDropdown");
-
-dropdown.classList.add("show");
-
-renderMakeOptions();
-
-setTimeout(()=>{
-
-const input=document.getElementById("makeSearchInput");
-
-input.focus();
-
-},50);
-}
-
-function closeMakeMenu(){
-
-const dropdown=document.getElementById("makeDropdown");
-
-if(dropdown){
-dropdown.classList.remove("show");
-}
-}
-
-function renderMakeOptions(){
-
-const query=document.getElementById("makeSearchInput")
-.value.toLowerCase()
-.trim();
-
-const box=document.getElementById("makeOptions");
-
-const filtered=BRANDS.filter(brand=>
-brand[0].toLowerCase().includes(query)||
-brand[1].toLowerCase().includes(query)
-);
-
-if(!filtered.length){
-box.innerHTML=`<div style="padding:12px;color:#888">
-No makes found
-</div>`;
-return;
-}
-
-box.innerHTML=filtered.map(brand=>{
-
-return `
-<button
-type="button"
-class="makeOption"
-data-make="${safe(brand[0])}">
-${safe(brand[0])}
-</button>
-`;
-
-}).join("");
-}
-
-function selectMake(make){
-
-selectedMake=normalizeMake(make);
-
-document.getElementById("makeButtonText").textContent=
-selectedMake;
-
-document.getElementById("makeOpen").classList.add("active");
-
-document.getElementById("selectedMake").textContent=
-selectedMake;
-
-closeMakeMenu();
-
-document.getElementById("makeSearchInput").value="";
-}
-
-document.getElementById("makeOpen").addEventListener("click",function(e){
-
-e.preventDefault();
-
-if(document.getElementById("makeDropdown").classList.contains("show")){
-closeMakeMenu();
-}else{
-openMakeMenu();
-}
-
-});
-
-document.getElementById("makeSearchInput").addEventListener("input",function(){
-
-renderMakeOptions();
-
-});
-
-document.getElementById("makeSearchInput").addEventListener("keydown",function(e){
-
-if(e.key==="Enter"){
-e.preventDefault();
-}
-});
-
-function createId(){
-
-return Date.now().toString(36)+"-"+Math.random()
-.toString(36).slice(2,10);
-}
-
-document.getElementById("saveItem").addEventListener("click",function(){
-
-const model=document.getElementById("model").value.trim();
-const year=document.getElementById("year").value.trim();
-const sale=document.getElementById("sale").value.trim();
-const buy=ddocument.getElementById("buyPrice").value.trim();
-const description=document.getElementById("description").value.trim();
-
-if(!model){
-alert("Enter a model.");
-return;
-}
-
-if(!selectedMake){
-alert("Select a make.");
-return;
-}
-
-const motor={
-id:createId(),
-model:model,
-year:year,
-make:selectedMake,
-sale:sale||0,
-buy:buy||0,
-description:description
-};
-
-motors.push(motor);
-
-saveAll();
-
-document.getElementById("model").value="";
-document.getElementById("year").value="";
-document.getElementById("sale").value="";
-document.getElementById("buy").value="";
-document.getElementById("description").value="";
-
-selectedMake="";
-
-document.getElementById("makeButtonText").textContent="Select make...";
-document.getElementById("makeOpen").classList.remove("active");
-document.getElementById("selectedMake").textContent="No make selected";
-
-closeMakeMenu();
-
-});
-
-document.getElementById("ticketPreviewBtn").addEventListener("click",function(){
-
-const selectedMotors=motors.filter(motor=>
-ticket.some(id=>String(id)===String(motor.id))
-);
-
-const items=document.getElementById("receiptItems");
-
-if(!selectedMotors.length){
-
-items.innerHTML=`
-<div class="receiptItem">
-No items in ticket.
-</div>
-`;
-
-document.getElementById("receiptTotal").textContent="0.00";
-
-}else{
-
-let total=0;
-
-items.innerHTML=selectedMotors.map(motor=>{
-
-const price=Number(motor.sale||0);
-
-total+=price;
-
-return `
-<div class="receiptItem">
-${safe(normalizeMake(motor.make))} ${safe(motor.model)}
-<br>
-${safe(motor.year)}
-<br>
-$${price.toFixed(2)}
-</div>
-`;
-
-}).join("");
-
-document.getElementById("receiptTotal").textContent=
-total.toFixed(2);
+        }).join("");
 
 }
 
-document.getElementById("preview").classList.add("show");
-
-});
-
-document.getElementById("preview").addEventListener("click",function(e){
-
-if(e.target===this){
-this.classList.remove("show");
-}
-
-});
-
-document.getElementById("printBtn").addEventListener("click",function(){
-
-window.print();
-
-});
-
-document.addEventListener("keydown",function(e){
-
-if(e.key!=="Enter")return;
-
-const target=e.target;
-
-if(
-target.tagName==="INPUT" &&
-target.id!=="makeSearchInput"
-){
-e.preventDefault();
-target.blur();
-}
-
-});
 
 document.addEventListener("click",function(e){
 
-const dropdown=document.getElementById("makeDropdown");
-const makeBox=document.getElementById("makeOpen");
-if(
-dropdown.classList.contains("show") &&
-!makeBox.contains(e.target)
-){
-closeMakeMenu();
-}
+    const button =
+        e.target.closest(".brandBtn");
+
+
+    if(!button){
+        return;
+    }
+
+
+    const name =
+        button.dataset.brand;
+
+
+    const index =
+        selectedBrands.indexOf(name);
+
+
+    if(index === -1){
+
+        selectedBrands.push(name);
+
+    }else{
+
+        selectedBrands.splice(index,1);
+
+    }
+
+
+    renderBrands();
+    renderSearch();
 
 });
 
+
+/* =====================================================
+   SEARCH INPUT
+===================================================== */
+
+document
+    .getElementById("searchInput")
+    .addEventListener("input",renderSearch);
+
+
+/* =====================================================
+   SEARCH RESULTS
+===================================================== */
+
+function renderSearch(){
+
+    const input =
+        document.getElementById("searchInput");
+
+
+    if(!input){
+        return;
+    }
+
+
+    const query =
+        input.value.toLowerCase().trim();
+
+
+    const results =
+        motors.filter(motor => {
+
+            const make =
+                normalizeMake(motor.make);
+
+
+            const text = (
+
+                String(motor.model ?? "") +
+                " " +
+                String(motor.year ?? "") +
+                " " +
+                make +
+                " " +
+                String(motor.description ?? "")
+
+            ).toLowerCase();
+
+
+            const searchOK =
+                text.includes(query);
+
+
+            const brandOK =
+                selectedBrands.length === 0 ||
+                selectedBrands.includes(make);
+
+
+            return searchOK && brandOK;
+
+        });
+
+
+    const box =
+        document.getElementById("searchResults");
+
+
+    if(!results.length){
+
+        box.innerHTML =
+            `<div class="empty">NO MOTORS FOUND</div>`;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        results.map(motor => {
+
+            return `
+
+                <div class="motorCard">
+
+                    <div class="motorTitle">
+                        ${safe(motor.model)}
+                    </div>
+
+                    <div class="motorInfo">
+                        ${safe(motor.year)}
+                        •
+                        ${safe(normalizeMake(motor.make))}
+                    </div>
+
+                    <div class="motorDescription">
+                        ${safe(motor.description)}
+                    </div>
+
+                    <div class="motorPrice">
+                        SALE: $${Number(motor.sale || 0).toFixed(2)}
+                        &nbsp; | &nbsp;
+                        BUY: $${Number(motor.buy || 0).toFixed(2)}
+                    </div>
+
+                    <button
+                        type="button"
+                        class="deleteMotor"
+                        data-delete="${safe(motor.id)}">
+                        DELETE
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   DELETE MOTOR
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+    const button =
+        e.target.closest(".deleteMotor");
+
+
+    if(!button){
+        return;
+    }
+
+
+    const id =
+        String(button.dataset.delete);
+
+
+    const index =
+        motors.findIndex(
+            motor => String(motor.id) === id
+        );
+
+
+    if(index === -1){
+        return;
+    }
+
+
+    motors.splice(index,1);
+
+
+    ticket =
+        ticket.filter(
+            ticketId =>
+                String(ticketId) !== id
+        );
+
+
+    saveAll();
+
+    renderSearch();
+
+});
+
+
+/* =====================================================
+   MAKE MENU OPEN
+===================================================== */
+
+document
+    .getElementById("makeOpen")
+    .addEventListener("click",function(e){
+
+        e.preventDefault();
+        e.stopPropagation();
+
+
+        const dropdown =
+            document.getElementById("makeDropdown");
+
+
+        dropdown.classList.toggle("show");
+
+
+        if(dropdown.classList.contains("show")){
+
+            renderMakeOptions();
+
+
+            const search =
+                document.getElementById("makeSearchInput");
+
+
+            search.value = "";
+
+            setTimeout(function(){
+
+                search.focus();
+
+            },50);
+
+        }
+
+    });
+
+
+/* =====================================================
+   MAKE SEARCH
+===================================================== */
+
+document
+    .getElementById("makeSearchInput")
+    .addEventListener("input",function(){
+
+        renderMakeOptions(this.value);
+
+    });
+
+
+function renderMakeOptions(query = ""){
+
+    const box =
+        document.getElementById("makeOptions");
+
+
+    const q =
+        String(query).toLowerCase().trim();
+
+
+    const results =
+        BRANDS.filter(brand => {
+
+            return brand[0]
+                .toLowerCase()
+                .includes(q);
+
+        });
+
+
+    box.innerHTML =
+        results.map(brand => {
+
+            return `
+
+                <button
+                    type="button"
+                    class="makeOption"
+                    data-make="${safe(brand[0])}">
+                    ${safe(brand[0])}
+                </button>
+
+            `;
+
+        }).join("");
+
+
+    if(!results.length){
+
+        box.innerHTML =
+            `<div class="empty" style="min-height:100px">
+                NO MAKES FOUND
+            </div>`;
+
+    }
+
+}
+  <script>
+
+/* =====================================================
+   SELECT MAKE
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+    const button =
+        e.target.closest(".makeOption");
+
+
+    if(!button){
+        return;
+    }
+
+
+    selectedMake =
+        button.dataset.make;
+
+
+    document
+        .getElementById("selectedMake")
+        .textContent =
+            selectedMake;
+
+
+    document
+        .getElementById("makeOpen")
+        .textContent =
+            selectedMake;
+
+
+    document
+        .getElementById("makeOpen")
+        .classList.add("active");
+
+
+    closeMakeMenu();
+
+});
+
+
+/* =====================================================
+   CLOSE MAKE MENU
+===================================================== */
+
+function closeMakeMenu(){
+
+    const dropdown =
+        document.getElementById("makeDropdown");
+
+
+    if(!dropdown){
+        return;
+    }
+
+
+    dropdown.classList.remove("show");
+
+}
+
+
+/*
+   IMPORTANT:
+   This replaces the broken old code that used
+   document.querySelector(".makeBox").
+*/
+
+document.addEventListener("click",function(e){
+
+    const dropdown =
+        document.getElementById("makeDropdown");
+
+
+    const makeButton =
+        document.getElementById("makeOpen");
+
+
+    if(!dropdown || !makeButton){
+        return;
+    }
+
+
+    if(!dropdown.classList.contains("show")){
+        return;
+    }
+
+
+    if(
+        !dropdown.contains(e.target) &&
+        !makeButton.contains(e.target)
+    ){
+
+        closeMakeMenu();
+
+    }
+
+});
+
+
+/* =====================================================
+   ADD ITEM
+===================================================== */
+
+document
+    .getElementById("saveItem")
+    .addEventListener("click",function(){
+
+        const model =
+            document.getElementById("model").value.trim();
+
+
+        const year =
+            document.getElementById("year").value.trim();
+
+
+        const sale =
+            document.getElementById("sale").value.trim();
+
+
+        const buy =
+            document.getElementById("buyPrice").value.trim();
+
+
+        const description =
+            document.getElementById("description").value.trim();
+
+
+        if(!model){
+
+            alert("Enter a model.");
+
+            document.getElementById("model").focus();
+
+            return;
+
+        }
+
+
+        if(!selectedMake){
+
+            alert("Select a make.");
+
+            return;
+
+        }
+
+
+        const motor = {
+
+            id:
+                Date.now().toString() +
+                Math.random().toString(36).slice(2),
+
+            model:model,
+
+            year:year,
+
+            make:selectedMake,
+
+            sale:sale || "0",
+
+            buy:buy || "0",
+
+            description:description
+
+        };
+
+
+        motors.push(motor);
+
+
+        saveAll();
+
+
+        /*
+           Clear form
+        */
+
+        document.getElementById("model").value = "";
+        document.getElementById("year").value = "";
+        document.getElementById("sale").value = "";
+        document.getElementById("buyPrice").value = "";
+        document.getElementById("description").value = "";
+
+
+        selectedMake = "";
+
+
+        document.getElementById(
+            "selectedMake"
+        ).textContent =
+            "No make selected";
+
+
+        document.getElementById(
+            "makeOpen"
+        ).textContent =
+            "Select make...";
+
+
+        document.getElementById(
+            "makeOpen"
+        ).classList.remove("active");
+
+
+        closeMakeMenu();
+
+
+        /*
+           NO "MOTOR ADDED" POPUP.
+        */
+
+
+        openPage("search");
+
+    });
+
+
+/* =====================================================
+   TICKET BRANDS
+   ONLY SHOW BRANDS THAT EXIST IN INVENTORY
+===================================================== */
+
+function getInventoryBrands(){
+
+    const names = [];
+
+
+    motors.forEach(motor => {
+
+        const make =
+            normalizeMake(motor.make);
+
+
+        if(
+            make &&
+            !names.includes(make)
+        ){
+
+            names.push(make);
+
+        }
+
+    });
+
+
+    return names.sort(
+        (a,b) =>
+            a.localeCompare(b)
+    );
+
+}
+
+
+/* =====================================================
+   RENDER TICKET BRANDS
+===================================================== */
+
+function renderTicketBrands(){
+
+    const box =
+        document.getElementById("ticketBrands");
+
+
+    const brands =
+        getInventoryBrands();
+
+
+    /*
+       Remove selected filters that no longer exist.
+    */
+
+    ticketBrandsSelected =
+        ticketBrandsSelected.filter(
+            brand => brands.includes(brand)
+        );
+
+
+    if(!brands.length){
+
+        box.innerHTML =
+            `<div style="color:#777;font-size:12px">
+                NO BRANDS IN INVENTORY
+            </div>`;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        brands.map(brand => {
+
+            const selected =
+                ticketBrandsSelected.includes(brand);
+
+
+            return `
+
+                <button
+                    type="button"
+                    class="ticketBrand ${selected ? "selected" : ""}"
+                    data-ticket-brand="${safe(brand)}">
+
+                    ${safe(brand)}
+
+                </button>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   TICKET BRAND FILTER
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+    const button =
+        e.target.closest(".ticketBrand");
+
+
+    if(!button){
+        return;
+    }
+
+
+    const brand =
+        button.dataset.ticketBrand;
+
+
+    const index =
+        ticketBrandsSelected.indexOf(brand);
+
+
+    if(index === -1){
+
+        ticketBrandsSelected.push(brand);
+
+    }else{
+
+        ticketBrandsSelected.splice(index,1);
+
+    }
+
+
+    renderTicketBrands();
+    renderTicket();
+
+});
+
+
+/* =====================================================
+   RENDER TICKET
+===================================================== */
+
+function renderTicket(){
+
+    const box =
+        document.getElementById("ticketList");
+
+
+    let selectedMotors =
+        motors.filter(motor => {
+
+            const inTicket =
+                ticket.some(
+                    id =>
+                        String(id) === String(motor.id)
+                );
+
+
+            if(!inTicket){
+                return false;
+            }
+
+
+            const make =
+                normalizeMake(motor.make);
+
+
+            const brandOK =
+                ticketBrandsSelected.length === 0 ||
+                ticketBrandsSelected.includes(make);
+
+
+            return brandOK;
+
+        });
+
+
+    if(!selectedMotors.length){
+
+        box.innerHTML =
+            `<div class="empty">
+                NO ITEMS IN TICKET
+            </div>`;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        selectedMotors.map(motor => {
+
+            return `
+
+                <div class="ticketCard">
+
+                    <div>
+
+                        <strong>
+                            ${safe(normalizeMake(motor.make))}
+                            ${safe(motor.model)}
+                        </strong>
+
+                        <div style="color:#999;font-size:12px;margin-top:4px">
+                            ${safe(motor.year)}
+                            •
+                            $${Number(motor.sale || 0).toFixed(2)}
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="ticketRemove"
+                        data-ticket-remove="${safe(motor.id)}">
+                        ×
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   ADD/REMOVE MOTOR FROM TICKET
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+    const card =
+        e.target.closest(".motorCard");
+
+
+    if(!card){
+        return;
+    }
+
+
+    /*
+       Only add when the card itself is clicked,
+       not when DELETE is clicked.
+    */
+
+    if(
+        e.target.closest(".deleteMotor")
+    ){
+        return;
+    }
+
+
+    const deleteButton =
+        card.querySelector(".deleteMotor");
+
+
+    if(!deleteButton){
+        return;
+    }
+
+
+    const id =
+        String(deleteButton.dataset.delete);
+
+
+    const exists =
+        ticket.some(
+            ticketId =>
+                String(ticketId) === id
+        );
+
+
+    if(!exists){
+
+        ticket.push(id);
+
+        saveAll();
+
+    }
+
+});
+
+
+/* =====================================================
+   REMOVE FROM TICKET
+===================================================== */
+
+document.addEventListener("click",function(e){
+
+    const button =
+        e.target.closest(".ticketRemove");
+
+
+    if(!button){
+        return;
+    }
+
+
+    const id =
+        String(button.dataset.ticketRemove);
+
+
+    ticket =
+        ticket.filter(
+            ticketId =>
+                String(ticketId) !== id
+        );
+
+
+    saveAll();
+
+    renderTicket();
+
+});
+
+
+/* =====================================================
+   TICKET PREVIEW
+===================================================== */
+
+document
+    .getElementById("ticketPreviewBtn")
+    .addEventListener("click",function(){
+
+        const selectedMotors =
+            motors.filter(motor =>
+                ticket.some(
+                    id =>
+                        String(id) === String(motor.id)
+                )
+            );
+
+
+        const items =
+            document.getElementById("receiptItems");
+
+
+        if(!selectedMotors.length){
+
+            items.innerHTML = `
+
+                <div class="receiptItem">
+                    No items in ticket.
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "receiptTotal"
+            ).textContent =
+                "0.00";
+
+
+        }else{
+
+            let total = 0;
+
+
+            items.innerHTML =
+                selectedMotors.map(motor => {
+
+                    const price =
+                        Number(motor.sale || 0);
+
+
+                    total += price;
+
+
+                    return `
+
+                        <div class="receiptItem">
+
+                            ${safe(normalizeMake(motor.make))}
+                            ${safe(motor.model)}
+
+                            <br>
+
+                            ${safe(motor.year)}
+
+                            <br>
+
+                            $${price.toFixed(2)}
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+
+            document.getElementById(
+                "receiptTotal"
+            ).textContent =
+                total.toFixed(2);
+
+        }
+
+
+        document
+            .getElementById("preview")
+            .classList.add("show");
+
+    });
+
+
+/* =====================================================
+   CLOSE PREVIEW
+===================================================== */
+
+document
+    .getElementById("preview")
+    .addEventListener("click",function(e){
+
+        if(e.target === this){
+
+            this.classList.remove("show");
+
+        }
+
+    });
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+document
+    .getElementById("printBtn")
+    .addEventListener("click",function(){
+
+        window.print();
+
+    });
+
+
+/* =====================================================
+   MOBILE ENTER KEY
+===================================================== */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key !== "Enter"){
+        return;
+    }
+
+
+    const target = e.target;
+
+
+    /*
+       Enter closes keyboard on normal inputs.
+       Description is intentionally excluded.
+       Make search is also excluded.
+    */
+
+    if(
+        target.tagName === "INPUT" &&
+        target.id !== "makeSearchInput"
+    ){
+
+        e.preventDefault();
+
+        target.blur();
+
+    }
+
+});
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
 loadTheme();
+
 openPage("home");
 
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>

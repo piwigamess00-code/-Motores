@@ -2,1355 +2,965 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>MOTORS</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,sans-serif}
+body{background:#18191a;color:#eee;transition:.2s}
+button,input,textarea{font-family:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+body.light{background:#eee;color:#111}
+body.light .homeBtn,
+body.light .themeBtn,
+body.light .back,
+body.light .searchInput,
+body.light .filterBtn,
+body.light .brandPanel,
+body.light .brandBtn,
+body.light .motorCard,
+body.light .ticketCard,
+body.light .ticketBrand,
+body.light .field input,
+body.light .field textarea,
+body.light .makeSearchButton,
+body.light .makeDropdown,
+body.light .makeOption,
+body.light .ticketRemove,
+body.light .deleteMotor,
+body.light .makeSearchInput{
+background:#fff;color:#111;border-color:#aaa
 }
+body.light .brandBtn.selected,
+body.light .ticketBrand.selected{background:#777;color:#fff}
 
-body{
-  background:#171819;
-  color:#eee;
-  font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
+.page{display:none;min-height:100vh;padding:18px}
+#home{display:flex;align-items:center;justify-content:center}
+
+.homeTop{position:absolute;top:15px;right:15px}
+.themeBtn{
+width:45px;height:45px;border:2px solid #555;border-radius:8px;
+background:#292b2d;color:#fff;font-size:21px
 }
-
-button,
-input,
-textarea{
-  font:inherit;
+.menu{
+width:310px;display:grid;grid-template-columns:1fr 1fr;gap:15px
 }
-
-button{
-  cursor:pointer;
+.homeBtn{
+height:80px;border:2px solid #555;border-radius:8px;
+background:#303234;color:#fff;font-size:14px;font-weight:bold;
+box-shadow:0 4px 0 #0d0d0d
 }
-
-.screen{
-  display:none;
-  min-height:100vh;
-  padding:18px;
-}
-
-/* ================= HOME ================= */
-
-#home{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.home-menu{
-  display:grid;
-  grid-template-columns:150px 150px;
-  gap:20px;
-}
-
-.home-btn{
-  width:150px;
-  height:82px;
-  border:2px solid #555;
-  border-radius:9px;
-  background:linear-gradient(145deg,#3d3f41,#292b2d);
-  color:#eee;
-  font-weight:900;
-  letter-spacing:1px;
-  box-shadow:0 5px 0 #090a0b;
-}
-
-.home-btn:active{
-  transform:translateY(4px);
-  box-shadow:0 1px 0 #090a0b;
-}
-
-.add-btn{
-  grid-column:1 / 3;
-  justify-self:center;
-}
-
-/* ================= HEADER ================= */
+.homeBtn:active{transform:translateY(3px);box-shadow:0 1px 0 #0d0d0d}
+.addHome{grid-column:1/3}
 
 .header{
-  height:48px;
-  position:relative;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin-bottom:20px;
+position:relative;height:55px;display:flex;
+align-items:center;justify-content:center
 }
-
-.title{
-  font-size:23px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
+.title{font-size:22px;font-weight:900;letter-spacing:2px}
 .back{
-  position:absolute;
-  left:0;
-  width:42px;
-  height:42px;
-  border:2px solid #555;
-  border-radius:7px;
-  background:#292b2d;
-  color:#fff;
-  font-size:25px;
+position:absolute;left:0;top:0;width:45px;height:45px;
+border:2px solid #555;border-radius:7px;background:#292b2d;
+color:#fff;font-size:24px
 }
 
-/* ================= SEARCH ================= */
+.searchTop{display:flex;gap:8px}
+.searchInput{
+flex:1;height:50px;padding:10px;border:2px solid #555;
+border-radius:7px;background:#292b2d;color:#fff;outline:none
+}
+.filterBtn{
+width:50px;height:50px;border:2px solid #555;border-radius:7px;
+background:#292b2d;color:#fff;font-size:22px
+}
+.brandPanel{
+display:none;margin-top:10px;padding:8px;border:1px solid #555;
+border-radius:7px;background:#222;grid-template-columns:1fr 1fr;gap:6px
+}
+.brandPanel.show{display:grid}
+.brandBtn{
+min-height:43px;border:1px solid #555;border-radius:6px;
+background:#303234;color:#fff;font-size:11px;font-weight:bold
+}
+.brandBtn.selected{background:#999;color:#111}
 
-.search-row{
-  display:flex;
-  gap:9px;
+.motorList{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.motorCard{
+padding:14px;border:1px solid #555;border-left:4px solid #aaa;
+border-radius:7px;background:#292b2d
+}
+.motorTitle{font-size:18px;font-weight:bold}
+.motorInfo{margin-top:5px;color:#aaa;font-size:13px}
+.motorDescription{margin-top:9px;color:#ccc;line-height:1.4}
+.motorPrice{margin-top:10px;font-weight:bold}
+.deleteMotor{
+width:100%;height:42px;margin-top:12px;border:1px solid #555;
+border-radius:6px;background:#202122;color:#ddd;font-weight:bold
 }
 
-.search-input{
-  flex:1;
-  height:52px;
-  border:2px solid #555;
-  border-radius:8px;
-  background:#292b2d;
-  color:#fff;
-  padding:0 13px;
-  outline:none;
+.ticketPreviewBtn{
+position:absolute;right:0;top:2px;height:38px;padding:0 9px;
+border:1px solid #555;border-radius:6px;background:#303234;
+color:#fff;font-size:9px;font-weight:bold
+}
+.ticketBrands{
+display:flex;gap:7px;overflow-x:auto;padding:8px 0 12px
+}
+.ticketBrand{
+flex:0 0 auto;min-width:85px;height:38px;border:1px solid #555;
+border-radius:6px;background:#292b2d;color:#fff;font-size:10px;font-weight:bold
+}
+.ticketBrand.selected{background:#999;color:#111}
+.ticketList{display:flex;flex-direction:column;gap:10px}
+.ticketCard{
+display:flex;align-items:center;justify-content:space-between;
+padding:13px;border:1px solid #555;border-radius:7px;background:#292b2d
+}
+.ticketRemove{
+width:40px;height:40px;border:1px solid #555;border-radius:6px;
+background:#202122;color:#fff;font-size:20px
 }
 
-.filter{
-  width:52px;
-  height:52px;
-  border:2px solid #555;
-  border-radius:8px;
-  background:#292b2d;
-  color:#fff;
-  font-size:22px;
+.form{max-width:750px;margin:auto}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{color:#aaa;font-size:11px;font-weight:bold}
+.field input,.field textarea{
+width:100%;min-height:50px;padding:11px;border:2px solid #555;
+border-radius:7px;background:#292b2d;color:#fff;outline:none
 }
+.field textarea{min-height:140px;resize:vertical}
+.descriptionField{grid-column:1/3}
 
-.brands{
-  display:none;
-  margin-top:10px;
-  padding:8px;
-  background:#202224;
-  border:1px solid #555;
-  border-radius:8px;
-  grid-template-columns:repeat(2,1fr);
-  gap:6px;
+.makeBox{position:relative;width:100%}
+.makeSearchButton{
+width:100%;min-height:50px;padding:11px;border:2px solid #555;
+border-radius:7px;background:#292b2d;color:#aaa;text-align:left;
+overflow:hidden
 }
-
-.brands.open{
-  display:grid;
+.makeSearchButton.active{color:#fff}
+.makeSearchButton span{
+display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
 }
+.selectedMake{color:#999;font-size:11px}
 
-.brand{
-  min-height:42px;
-  border:1px solid #555;
-  border-radius:6px;
-  background:#2d2f31;
-  color:#fff;
-  font-size:12px;
-  font-weight:900;
+.makeDropdown{
+display:none;position:absolute;z-index:50;left:0;right:0;
+top:calc(100% + 5px);max-height:240px;overflow-y:auto;padding:7px;
+border:2px solid #555;border-radius:8px;background:#202223;
+box-shadow:0 8px 20px rgba(0,0,0,.45)
 }
-
-.brand.selected{
-  background:#85898d;
-  color:#111;
+.makeDropdown.show{display:block}
+.makeSearchInput{
+width:100%;height:44px;margin-bottom:8px;padding:10px;
+border:2px solid #555;border-radius:7px;background:#292b2d;
+color:#fff;outline:none
 }
-
-.motor-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:18px;
+.makeOption{
+width:100%;min-height:44px;margin-bottom:5px;border:1px solid #555;
+border-radius:6px;background:#303234;color:#fff;text-align:left;padding:0 11px
 }
-
-.motor{
-  padding:14px;
-  border:1px solid #505255;
-  border-left:4px solid #aaa;
-  border-radius:7px;
-  background:#292b2d;
+.saveItem{
+width:100%;height:55px;margin-top:20px;border:2px solid #777;
+border-radius:7px;background:#888;color:#111;font-weight:900
 }
-
-.motor-name{
-  font-size:18px;
-  font-weight:900;
-}
-
-.motor-info{
-  color:#aaa;
-  font-size:13px;
-  margin-top:5px;
-}
-
-.motor-price{
-  margin-top:8px;
-  color:#ddd;
-  font-weight:900;
-}
-
-.delete-motor{
-  width:100%;
-  height:40px;
-  margin-top:12px;
-  border:1px solid #666;
-  border-radius:6px;
-  background:#202123;
-  color:#ddd;
-  font-size:12px;
-  font-weight:900;
-}
-
-/* ================= TICKET ================= */
-
-.ticket-preview{
-  position:absolute;
-  right:0;
-  top:0;
-  width:125px;
-  height:40px;
-  border:1px solid #555;
-  border-radius:6px;
-  background:#343638;
-  color:#fff;
-  font-size:11px;
-  font-weight:900;
-}
-
-.ticket-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.ticket-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:13px;
-  border:1px solid #555;
-  border-radius:7px;
-  background:#292b2d;
-}
-
-.ticket-name{
-  font-weight:900;
-}
-
-.ticket-price{
-  margin-top:5px;
-  color:#ccc;
-  font-weight:900;
-}
-
-.remove-ticket{
-  width:40px;
-  height:40px;
-  border:1px solid #555;
-  border-radius:6px;
-  background:#202123;
-  color:#ddd;
-}
-
-/* ================= ADD ITEM ================= */
-
-.form{
-  max-width:700px;
-  margin:auto;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
-.field label{
-  font-size:11px;
-  color:#aaa;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.field input,
-.field textarea{
-  width:100%;
-  min-height:52px;
-  border:2px solid #555;
-  border-radius:8px;
-  background:#292b2d;
-  color:#fff;
-  padding:11px;
-  outline:none;
-}
-
-.field textarea{
-  resize:vertical;
-  min-height:110px;
-}
-
-/* ================= MAKE SEARCH ================= */
-
-.make-box{
-  position:relative;
-}
-
-.make-search{
-  width:100%;
-  height:52px;
-  border:2px solid #555;
-  border-radius:8px;
-  background:#292b2d;
-  color:#fff;
-  padding:0 13px;
-  outline:none;
-}
-
-.make-list{
-  display:none;
-  position:absolute;
-  left:0;
-  right:0;
-  top:76px;
-  z-index:100;
-  max-height:250px;
-  overflow-y:auto;
-  background:#202224;
-  border:1px solid #555;
-  border-radius:8px;
-  padding:6px;
-}
-
-.make-list.open{
-  display:block;
-}
-
-.make-option{
-  width:100%;
-  min-height:42px;
-  margin-bottom:5px;
-  border:1px solid #4f5153;
-  border-radius:6px;
-  background:#2d2f31;
-  color:#fff;
-  text-align:left;
-  padding:0 12px;
-  font-weight:800;
-}
-
-.make-option:active{
-  background:#85898d;
-  color:#111;
-}
-
-.selected-make{
-  min-height:20px;
-  color:#aaa;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.save-item{
-  width:100%;
-  height:55px;
-  margin-top:20px;
-  border:2px solid #777;
-  border-radius:8px;
-  background:#888c90;
-  color:#111;
-  font-weight:900;
-}
-
-/* ================= EMPTY ================= */
 
 .empty{
-  min-height:70vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:#888;
-  text-align:center;
+min-height:60vh;display:flex;align-items:center;
+justify-content:center;color:#777
 }
-
-/* ================= TICKET PREVIEW ================= */
 
 .preview{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:200;
-  background:rgba(0,0,0,.8);
-  justify-content:center;
-  align-items:flex-start;
-  padding:60px 15px;
+display:none;position:fixed;z-index:1000;inset:0;padding:30px 12px;
+background:rgba(0,0,0,.82);align-items:flex-start;justify-content:center
 }
-
-.preview.open{
-  display:flex;
-}
-
+.preview.show{display:flex}
 .receipt{
-  width:360px;
-  max-width:100%;
-  max-height:85vh;
-  overflow:auto;
-  background:#fff;
-  color:#111;
-  padding:20px;
-  font-family:monospace;
+width:380px;max-width:100%;max-height:90vh;overflow:auto;padding:20px;
+background:#fff;color:#111;font-family:monospace
+}
+.receiptTitle{text-align:center;font-size:20px;font-weight:bold;margin-bottom:18px}
+.receiptItem{padding:10px 0;border-bottom:1px dashed #777}
+.receiptTotal{margin-top:14px;padding-top:10px;border-top:2px solid #111;font-weight:bold}
+.printBtn{
+width:100%;height:43px;margin-top:15px;border:0;border-radius:5px;
+background:#222;color:#fff;font-weight:bold
 }
 
-.receipt h2{
-  text-align:center;
-  margin-bottom:15px;
+@media(max-width:550px){
+.formGrid{grid-template-columns:1fr}
+.descriptionField{grid-column:auto}
 }
-
-.receipt-item{
-  padding:9px 0;
-  border-bottom:1px dashed #777;
-}
-
-.receipt-total{
-  border-top:2px solid #111;
-  margin-top:12px;
-  padding-top:10px;
-  font-weight:bold;
-}
-
-.print-button{
-  width:100%;
-  height:42px;
-  margin-top:15px;
-  background:#222;
-  color:#fff;
-  border:0;
-  border-radius:5px;
-  font-weight:bold;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:500px){
-
-  .home-menu{
-    grid-template-columns:135px 135px;
-    gap:17px;
-  }
-
-  .home-btn{
-    width:135px;
-    height:76px;
-  }
-
-  .add-btn{
-    width:135px;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-    gap:12px;
-  }
-
-  .brands.open{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .ticket-preview{
-    width:110px;
-  }
-
-  .title{
-    font-size:20px;
-  }
-}
-
-/* ================= PRINT ================= */
 
 @media print{
-
-  body *{
-    visibility:hidden;
-  }
-
-  .preview,
-  .preview *{
-    visibility:visible;
-  }
-
-  .preview{
-    position:absolute;
-    inset:0;
-    padding:0;
-    background:white;
-  }
-
-  .receipt{
-    width:100%;
-    max-height:none;
-  }
-
-  .print-button{
-    display:none;
-  }
+body *{visibility:hidden}
+.preview,.preview *{visibility:visible}
+.preview{position:absolute;inset:0;padding:0;background:#fff}
+.receipt{width:100%;max-height:none}
+.printBtn{display:none}
 }
 </style>
 </head>
-
 <body>
 
-<!-- ================= HOME ================= -->
-
-<section id="home" class="screen">
-
-  <div class="home-menu">
-
-    <button class="home-btn" data-screen="search">
-      SEARCH
-    </button>
-
-    <button class="home-btn" data-screen="ticket">
-      TICKET
-    </button>
-
-    <button class="home-btn" data-screen="buy">
-      BUY$
-    </button>
-
-    <button class="home-btn" data-screen="sales">
-      SALES$
-    </button>
-
-    <button class="home-btn add-btn" data-screen="add">
-      ADD ITEM
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ================= SEARCH ================= -->
-
-<section id="search" class="screen">
-
-  <div class="header">
-
-    <button class="back" data-home>
-      ←
-    </button>
-
-    <div class="title">
-      SEARCH
-    </div>
-
-  </div>
-
-  <div class="search-row">
-
-    <input
-      id="searchInput"
-      class="search-input"
-      placeholder="Search motors...">
-
-    <button id="filterButton" class="filter">
-      ☰
-    </button>
-
-  </div>
-
-  <div id="brands" class="brands"></div>
-
-  <div id="searchResults" class="motor-list"></div>
-
-</section>
-
-
-<!-- ================= TICKET ================= -->
-
-<section id="ticket" class="screen">
-
-  <div class="header">
-
-    <button class="back" data-home>
-      ←
-    </button>
-
-    <div class="title">
-      TICKET
-    </div>
-
-    <button id="previewButton" class="ticket-preview">
-      TICKET PREVIEW
-    </button>
-
-  </div>
-
-  <div id="ticketList" class="ticket-list"></div>
-
-</section>
-
-
-<!-- ================= BUY ================= -->
-
-<section id="buy" class="screen">
-
-  <div class="header">
-
-    <button class="back" data-home>
-      ←
-    </button>
-
-    <div class="title">
-      BUY$
-    </div>
-
-  </div>
-
-  <div class="empty">
-    BUY$ MENU — COMING SOON
-  </div>
-
-</section>
-
-
-<!-- ================= SALES ================= -->
-
-<section id="sales" class="screen">
-
-  <div class="header">
-
-    <button class="back" data-home>
-      ←
-    </button>
-
-    <div class="title">
-      SALES$
-    </div>
-
-  </div>
-
-  <div class="empty">
-    SALES$ MENU — COMING SOON
-  </div>
-
-</section>
-
-
-<!-- ================= ADD ITEM ================= -->
-
-<section id="add" class="screen">
-
-  <div class="header">
-
-    <button class="back" data-home>
-      ←
-    </button>
-
-    <div class="title">
-      ADD ITEM
-    </div>
-
-  </div>
-
-  <div class="form">
-
-    <div class="form-grid">
-
-      <div class="field">
-
-        <label>MODEL</label>
-
-        <input
-          id="model"
-          placeholder="Model">
-
-      </div>
-
-
-      <div class="field">
-
-        <label>YEAR</label>
-
-        <input
-          id="year"
-          type="number"
-          placeholder="Year">
-
-      </div>
-
-
-      <!-- MAKE -->
-
-      <div class="field make-box">
-
-        <label>MAKE</label>
-
-        <input
-          id="makeSearch"
-          class="make-search"
-          placeholder="Search make...">
-
-        <div
-          id="makeList"
-          class="make-list">
-        </div>
-
-        <div
-          id="selectedMake"
-          class="selected-make">
-          No make selected
-        </div>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>DESCRIPTION</label>
-
-        <textarea
-          id="description"
-          rows="5"
-          placeholder="Description..."></textarea>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>SALE$</label>
-
-        <input
-          id="sale"
-          type="number"
-          step="0.01"
-          placeholder="0.00">
-
-      </div>
-
-
-      <div class="field">
-
-        <label>BUY$</label>
-
-        <input
-          id="buy"
-          type="number"
-          step="0.01"
-          placeholder="0.00">
-
-      </div>
-
-    </div>
-
-
-    <button
-      id="saveItem"
-      class="save-item">
-
-      SAVE ITEM
-
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PREVIEW ================= -->
-
-<div id="preview" class="preview">
-
-  <div class="receipt">
-
-    <h2>MOTORS</h2>
-
-    <div id="receiptItems"></div>
-
-    <div class="receipt-total">
-
-      TOTAL:
-      $<span id="receiptTotal">0.00</span>
-
-    </div>
-
-    <button
-      id="printButton"
-      class="print-button">
-
-      PRINT
-
-    </button>
-
-  </div>
+<div id="home" class="page">
+<div class="homeTop">
+<button id="themeBtn" class="themeBtn">🌙</button>
+</div>
+<div class="menu">
+<button class="homeBtn" data-page="search">SEARCH</button>
+<button class="homeBtn" data-page="ticket">TICKET</button>
+<button class="homeBtn" data-page="buy">BUY$</button>
+<button class="homeBtn" data-page="sales">SALES$</button>
+<button class="homeBtn addHome" data-page="add">ADD ITEM</button>
+</div>
+</div>
+
+<div id="search" class="page">
+<div class="header">
+<button class="back" data-home>←</button>
+<div class="title">SEARCH</div>
+</div>
+<div class="searchTop">
+<input id="searchInput" class="searchInput" placeholder="Search all motors...">
+<button id="filterBtn" class="filterBtn">☰</button>
+</div>
+<div id="brandPanel" class="brandPanel"></div>
+<div id="searchResults" class="motorList"></div>
+</div>
+
+<div id="ticket" class="page">
+<div class="header">
+<button class="back" data-home>←</button>
+<div class="title">TICKET</div>
+<button id="ticketPreviewBtn" class="ticketPreviewBtn">TICKET PREVIEW</button>
+</div>
+<div id="ticketBrands" class="ticketBrands"></div>
+<div id="ticketList" class="ticketList"></div>
+</div>
+
+<div id="buy" class="page">
+<div class="header">
+<button class="back" data-home>←</button>
+<div class="title">BUY$</div>
+</div>
+<div class="empty">BUY$ MENU</div>
+</div>
+
+<div id="sales" class="page">
+<div class="header">
+<button class="back" data-home>←</button>
+<div class="title">SALES$</div>
+</div>
+<div class="empty">SALES$ MENU</div>
+</div>
+
+<div id="add" class="page">
+<div class="header">
+<button class="back" data-home>←</button>
+<div class="title">ADD ITEM</div>
+</div>
+
+<div class="form">
+<div class="formGrid">
+
+<div class="field">
+<label>MODEL</label>
+<input id="model" type="text" placeholder="Model">
+</div>
+
+<div class="field">
+<label>YEAR</label>
+<input id="year" type="number" placeholder="Year">
+</div>
+
+<div class="field">
+<label>MAKE</label>
+<div class="makeBox">
+<button id="makeOpen" class="makeSearchButton">
+<span id="makeButtonText">Select make...</span>
+</button>
+
+<div id="makeDropdown" class="makeDropdown">
+<input id="makeSearchInput" class="makeSearchInput"
+placeholder="Search make..." autocomplete="off">
+<div id="makeOptions"></div>
+</div>
+</div>
+
+<div id="selectedMake" class="selectedMake">No make selected</div>
+</div>
+
+<div class="field">
+<label>SALE$</label>
+<input id="sale" type="number" step="0.01" placeholder="Sale$">
+</div>
+
+<div class="field">
+<label>BUY$</label>
+<input id="buy" type="number" step="0.01" placeholder="Buy$">
+</div>
+
+<div class="field descriptionField">
+<label>DESCRIPTION</label>
+<textarea id="description" placeholder="Description"></textarea>
+</div>
 
 </div>
 
+<button id="saveItem" class="saveItem">SAVE ITEM</button>
+</div>
+</div>
 
+<div id="preview" class="preview">
+<div class="receipt">
+<div class="receiptTitle">MOTORS</div>
+<div id="receiptItems"></div>
+<div class="receiptTotal">TOTAL: $<span id="receiptTotal">0.00</span></div>
+<button id="printBtn" class="printBtn">PRINT</button>
+</div>
+</div>
 <script>
-
-/* =====================================================
-   BRANDS
-   Full names + abbreviations
-===================================================== */
-
-const BRANDS = [
-
-  {name:"Toyota", short:"TOY"},
-  {name:"Ford", short:"FORD"},
-  {name:"Chevrolet", short:"CHEV"},
-  {name:"BMW", short:"BMW"},
-  {name:"Mercedes-Benz", short:"MERC"},
-  {name:"Audi", short:"AUDI"},
-  {name:"Honda", short:"HON"},
-  {name:"Nissan", short:"NIS"},
-  {name:"Kia", short:"KIA"},
-  {name:"Hyundai", short:"HYUN"},
-  {name:"Ram", short:"RAM"},
-  {name:"GMC", short:"GMC"},
-  {name:"Dodge", short:"DOD"},
-  {name:"Jeep", short:"JEEP"},
-  {name:"Tesla", short:"TES"},
-  {name:"Lexus", short:"LEX"},
-  {name:"Volkswagen", short:"VW"},
-  {name:"Subaru", short:"SUB"},
-  {name:"Mazda", short:"MAZ"},
-  {name:"Volvo", short:"VOL"},
-  {name:"Acura", short:"ACU"},
-  {name:"Infiniti", short:"INF"},
-  {name:"Cadillac", short:"CAD"},
-  {name:"Porsche", short:"POR"},
-  {name:"Lamborghini", short:"LAM"},
-  {name:"Ferrari", short:"FER"},
-  {name:"Maserati", short:"MAS"}
-
+const BRANDS=[
+["Toyota","TOY"],["Ford","FORD"],["Chevrolet","CHEV"],
+["BMW","BMW"],["Mercedes-Benz","MERC"],["Audi","AUDI"],
+["Honda","HON"],["Nissan","NIS"],["Kia","KIA"],["Hyundai","HYUN"],
+["Ram","RAM"],["GMC","GMC"],["Dodge","DOD"],["Jeep","JEEP"],
+["Tesla","TES"],["Lexus","LEX"],["Volkswagen","VW"],["Subaru","SUB"],
+["Mazda","MAZ"],["Volvo","VOL"],["Acura","ACU"],["Infiniti","INF"],
+["Cadillac","CAD"],["Porsche","POR"],["Lamborghini","LAM"],
+["Ferrari","FER"],["Maserati","MAS"]
 ];
 
+let motors=readArray("motors");
+let ticket=readArray("ticket");
+let selectedBrands=[];
+let ticketBrandsSelected=[];
+let selectedMake="";
 
-/* =====================================================
-   DATA
-===================================================== */
-
-function loadArray(key){
-
-  try{
-
-    const value =
-      JSON.parse(
-        localStorage.getItem(key)
-      );
-
-    return Array.isArray(value)
-      ? value
-      : [];
-
-  }catch(error){
-
-    return [];
-
-  }
-
+function readArray(key){
+try{
+const value=localStorage.getItem(key);
+if(!value)return[];
+const parsed=JSON.parse(value);
+return Array.isArray(parsed)?parsed:[];
+}catch(e){return[]}
 }
 
-
-let motors = loadArray("motors");
-
-let ticketIds = loadArray("ticketIds");
-
-let selectedBrands = new Set();
-
-let selectedMake = "";
-
-
-/* =====================================================
-   SAVE
-===================================================== */
-
-function saveData(){
-
-  localStorage.setItem(
-    "motors",
-    JSON.stringify(motors)
-  );
-
-  localStorage.setItem(
-    "ticketIds",
-    JSON.stringify(ticketIds)
-  );
-
+function saveAll(){
+localStorage.setItem("motors",JSON.stringify(motors));
+localStorage.setItem("ticket",JSON.stringify(ticket));
 }
 
-
-/* =====================================================
-   HELPERS
-===================================================== */
-
-function escapeHTML(value){
-
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+function safe(value){
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 }
 
-
-function getBrand(name){
-
-  return BRANDS.find(
-    brand =>
-      brand.name === name ||
-      brand.short === name
-  );
-
+function normalizeMake(make){
+const text=String(make||"").trim();
+const found=BRANDS.find(b=>
+b[0].toLowerCase()===text.toLowerCase()||
+b[1].toLowerCase()===text.toLowerCase()
+);
+return found?found[0]:text;
 }
 
+function openPage(name){
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+document.querySelectorAll(".page").forEach(page=>{
+page.style.display="none";
+});
 
-function showScreen(id){
+const page=document.getElementById(name);
+if(!page)return;
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen=>{
-      screen.style.display="none";
-    });
+page.style.display=name==="home"?"flex":"block";
 
+closeMakeMenu();
 
-  const target =
-    document.getElementById(id);
-
-
-  if(!target) return;
-
-
-  if(id === "home"){
-    target.style.display="flex";
-  }else{
-    target.style.display="block";
-  }
-
-
-  if(id === "search"){
-    renderSearch();
-  }
-
-
-  if(id === "ticket"){
-    renderTicket();
-  }
-
+if(name==="search"){
+renderBrands();
+renderSearch();
 }
 
-
-document
-  .querySelectorAll("[data-screen]")
-  .forEach(button=>{
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        showScreen(
-          this.dataset.screen
-        );
-
-      }
-    );
-
-  });
-
-
-document
-  .querySelectorAll("[data-home]")
-  .forEach(button=>{
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        showScreen("home");
-
-      }
-    );
-
-  });
-
-
-/* =====================================================
-   SEARCH BRAND FILTERS
-===================================================== */
-
-function buildBrands(){
-
-  const box =
-    document.getElementById("brands");
-
-
-  box.innerHTML =
-    BRANDS.map(
-      brand=>`
-
-        <button
-          class="brand"
-          data-brand="${escapeHTML(brand.name)}">
-
-          ${escapeHTML(brand.name)}
-
-        </button>
-
-      `
-    ).join("");
-
-
-  box
-    .querySelectorAll(".brand")
-    .forEach(button=>{
-
-      button.addEventListener(
-        "click",
-        function(){
-
-          const brand =
-            this.dataset.brand;
-
-
-          if(
-            selectedBrands.has(brand)
-          ){
-
-            selectedBrands.delete(
-              brand
-            );
-
-          }else{
-
-            selectedBrands.add(
-              brand
-            );
-
-          }
-
-
-          this.classList.toggle(
-            "selected",
-            selectedBrands.has(brand)
-          );
-
-
-          renderSearch();
-
-        }
-      );
-
-    });
-
+if(name==="ticket"){
+renderTicketBrands();
+renderTicket();
+}
 }
 
+document.addEventListener("click",function(e){
 
-document
-  .getElementById("filterButton")
-  .addEventListener(
-    "click",
-    function(){
+const homeButton=e.target.closest(".homeBtn");
 
-      document
-        .getElementById("brands")
-        .classList.toggle("open");
+if(homeButton){
+openPage(homeButton.dataset.page);
+return;
+}
 
-    }
-  );
+if(e.target.closest("[data-home]")){
+openPage("home");
+return;
+}
 
+const deleteButton=e.target.closest(".deleteMotor");
 
-/* =====================================================
-   SEARCH MOTORS
-===================================================== */
+if(deleteButton){
+const id=deleteButton.dataset.id;
+deleteMotor(id);
+return;
+}
 
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    renderSearch
-  );
+const removeTicket=e.target.closest(".ticketRemove");
 
+if(removeTicket){
+removeFromTicket(removeTicket.dataset.id);
+return;
+}
+
+const ticketBrand=e.target.closest(".ticketBrand");
+
+if(ticketBrand){
+toggleTicketBrand(ticketBrand.dataset.brand);
+return;
+}
+
+const brandButton=e.target.closest(".brandBtn");
+
+if(brandButton){
+toggleSearchBrand(brandButton.dataset.brand);
+return;
+}
+
+const makeOption=e.target.closest(".makeOption");
+
+if(makeOption){
+selectMake(makeOption.dataset.make);
+return;
+}
+
+});
+
+function loadTheme(){
+
+const light=localStorage.getItem("theme")==="light";
+
+document.body.classList.toggle("light",light);
+
+document.getElementById("themeBtn").textContent=
+light?"☀️":"🌙";
+}
+
+document.getElementById("themeBtn").addEventListener("click",function(){
+
+const light=!document.body.classList.contains("light");
+
+document.body.classList.toggle("light",light);
+
+localStorage.setItem("theme",light?"light":"dark");
+
+this.textContent=light?"☀️":"🌙";
+});
+
+function toggleSearchBrand(name){
+
+const index=selectedBrands.indexOf(name);
+
+if(index===-1)selectedBrands.push(name);
+else selectedBrands.splice(index,1);
+
+renderBrands();
+renderSearch();
+}
+
+document.getElementById("filterBtn").addEventListener("click",function(){
+document.getElementById("brandPanel").classList.toggle("show");
+renderBrands();
+});
+
+function renderBrands(){
+
+const panel=document.getElementById("brandPanel");
+
+panel.innerHTML=BRANDS.map(brand=>{
+
+const name=brand[0];
+const selected=selectedBrands.includes(name);
+
+return `
+<button class="brandBtn ${selected?"selected":""}"
+data-brand="${safe(name)}">
+${safe(name)}
+</button>
+`;
+
+}).join("");
+}
+
+document.getElementById("searchInput").addEventListener("input",renderSearch);
 
 function renderSearch(){
 
-  const query =
-    document
-      .getElementById("searchInput")
-      .value
-      .toLowerCase()
-      .trim();
+const query=document.getElementById("searchInput").value.toLowerCase().trim();
 
+const results=motors.filter(motor=>{
 
-  const results =
-    motors.filter(motor=>{
+const make=normalizeMake(motor.make);
 
-      const brand =
-        getBrand(motor.make);
+const text=(
+motor.model+" "+
+motor.year+" "+
+make+" "+
+motor.description
+).toLowerCase();
 
+const searchOK=text.includes(query);
 
-      const fullMake =
-        brand
-          ? brand.name
-          : motor.make || "";
+const brandOK=
+selectedBrands.length===0||
+selectedBrands.includes(make);
 
+return searchOK&&brandOK;
+});
 
-      const text =
-        `${motor.model || ""}
-         ${motor.year || ""}
-         ${fullMake}
-         ${motor.make || ""}
-         ${motor.description || ""}`
-        .toLowerCase();
+const box=document.getElementById("searchResults");
 
+if(!results.length){
+box.innerHTML=`<div class="empty">NO MOTORS FOUND</div>`;
+return;
+}
 
-      const textMatch =
-        text.includes(query);
+box.innerHTML=results.map(motor=>{
 
+return `
+<div class="motorCard">
 
-      const brandMatch =
-        selectedBrands.size === 0 ||
-        selectedBrands.has(fullMake) ||
-        selectedBrands.has(motor.make);
+<div class="motorTitle">${safe(motor.model)}</div>
 
+<div class="motorInfo">
+${safe(motor.year)} • ${safe(normalizeMake(motor.make))}
+</div>
 
-      return textMatch && brandMatch;
+<div class="motorDescription">
+${safe(motor.description)}
+</div>
 
-    });
+<div class="motorPrice">
+SALE: $${Number(motor.sale||0).toFixed(2)}
+&nbsp; | &nbsp;
+BUY: $${Number(motor.buy||0).toFixed(2)}
+</div>
 
+<button class="deleteMotor" data-id="${safe(motor.id)}">
+DELETE
+</button>
 
-  const box =
-    document.getElementById(
-      "searchResults"
-    );
+</div>
+`;
 
+}).join("");
+}
+  function deleteMotor(id){
 
-  if(results.length === 0){
+const index=motors.findIndex(m=>String(m.id)===String(id));
 
-    box.innerHTML =
-      `<div class="empty">
-        NO MOTORS FOUND
-      </div>`;
+if(index===-1)return;
 
-    return;
+motors.splice(index,1);
 
-  }
+ticket=ticket.filter(id2=>String(id2)!==String(id));
 
+saveAll();
 
-  box.innerHTML =
-    results.map(
-      motor=>{
+renderSearch();
+renderTicketBrands();
+renderTicket();
+}
 
-        const brand =
-          getBrand(motor.make);
+function getInventoryBrands(){
 
+const names=[];
 
-        const makeName =
-          brand
-            ? brand.name
-            : motor.make;
+motors.forEach(motor=>{
 
+const make=normalizeMake(motor.make);
 
-        return `
+if(make && !names.includes(make)){
+names.push(make);
+}
 
-          <div class="motor">
+});
 
-            <div class="motor-name">
-              ${escapeHTML(
-                motor.model
-              )}
-            </div>
+return names;
+}
 
-            <div class="motor-info">
-              ${escapeHTML(
-                motor.year
-              )}
-              •
-              ${escapeHTML(
-                makeName
-              )}
-            </div>
+function renderTicketBrands(){
 
-            <div class="motor-info">
-              ${escapeHTML(
-                motor.description || ""
-              )}
-            </div>
+const box=document.getElementById("ticketBrands");
 
-            <div class="motor-price">
+const available=getInventoryBrands();
 
-              SALE:
-              $${Number(
-                motor.sale || 0
-              ).toFixed(2)}
+ticketBrandsSelected=ticketBrandsSelected.filter(
+brand=>available.includes(brand)
+);
 
-              &nbsp; | &nbsp;
+if(!available.length){
+box.innerHTML=`<div class="empty" style="min-height:auto;padding:20px">
+NO BRANDS IN INVENTORY
+</div>`;
+return;
+}
 
-              BUY:
-              $${Number(
-                motor.buy || 0
-              ).toFixed(2)}
+box.innerHTML=available.map(name=>{
 
-            </div>
+const selected=ticketBrandsSelected.includes(name);
 
-            <button
-              class="delete-motor"
-              data-delete-id="${escapeHTML(
-                motor.id
-              )}">
+return `
+<button
+class="ticketBrand ${selected?"selected":""}"
+data-brand="${safe(name)}">
+${safe(name)}
+</button>
+`;
 
-              DELETE MOTOR
+}).join("");
+}
 
-            </button>
+function toggleTicketBrand(name){
 
-          </div>
+const index=ticketBrandsSelected.indexOf(name);
 
-        `;
+if(index===-1){
+ticketBrandsSelected.push(name);
+}else{
+ticketBrandsSelected.splice(index,1);
+}
 
-      }
-    ).join("");
+renderTicketBrands();
+renderTicket();
+}
 
+function renderTicket(){
 
-  box
-    .querySelectorAll(
-      ".delete-motor"
-    )
-    .forEach(button=>{
+const box=document.getElementById("ticketList");
 
-      button.addEventListener(
-        "click",
-        function(event){
+let available=motors.filter(motor=>{
+const make=normalizeMake(motor.make);
 
-          event.preventDefault();
-          event.stopPropagation();
+return ticketBrandsSelected.length===0||
+ticketBrandsSelected.includes(make);
+});
 
-          deleteMotor(
-            this.dataset.deleteId
-          );
+if(!available.length){
+box.innerHTML=`<div class="empty">NO MOTORS FOUND</div>`;
+return;
+}
 
-        }
-      );
+box.innerHTML=available.map(motor=>{
 
-    });
+const inTicket=ticket.some(
+id=>String(id)===String(motor.id)
+);
+
+return `
+<div class="ticketCard">
+
+<div>
+<strong>${safe(motor.model)}</strong><br>
+<small>
+${safe(motor.year)} • ${safe(normalizeMake(motor.make))}
+</small><br>
+<small>
+$${Number(motor.sale||0).toFixed(2)}
+</small>
+</div>
+
+<button
+class="ticketRemove"
+data-id="${safe(motor.id)}">
+${inTicket?"−":"+"}
+</button>
+
+</div>
+`;
+
+}).join("");
+}
+
+function removeFromTicket(id){
+
+const index=ticket.findIndex(
+item=>String(item)===String(id)
+);
+
+if(index===-1){
+ticket.push(id);
+}else{
+ticket.splice(index,1);
+}
+
+saveAll();
+renderTicket();
+}
+
+function openMakeMenu(){
+
+const dropdown=document.getElementById("makeDropdown");
+
+dropdown.classList.add("show");
+
+renderMakeOptions();
+
+setTimeout(()=>{
+
+const input=document.getElementById("makeSearchInput");
+
+input.focus();
+
+},50);
+}
+
+function closeMakeMenu(){
+
+const dropdown=document.getElementById("makeDropdown");
+
+if(dropdown){
+dropdown.classList.remove("show");
+}
+}
+
+function renderMakeOptions(){
+
+const query=document.getElementById("makeSearchInput")
+.value.toLowerCase()
+.trim();
+
+const box=document.getElementById("makeOptions");
+
+const filtered=BRANDS.filter(brand=>
+brand[0].toLowerCase().includes(query)||
+brand[1].toLowerCase().includes(query)
+);
+
+if(!filtered.length){
+box.innerHTML=`<div style="padding:12px;color:#888">
+No makes found
+</div>`;
+return;
+}
+
+box.innerHTML=filtered.map(brand=>{
+
+return `
+<button
+type="button"
+class="makeOption"
+data-make="${safe(brand[0])}">
+${safe(brand[0])}
+</button>
+`;
+
+}).join("");
+}
+
+function selectMake(make){
+
+selectedMake=normalizeMake(make);
+
+document.getElementById("makeButtonText").textContent=
+selectedMake;
+
+document.getElementById("makeOpen").classList.add("active");
+
+document.getElementById("selectedMake").textContent=
+selectedMake;
+
+closeMakeMenu();
+
+document.getElementById("makeSearchInput").value="";
+}
+
+document.getElementById("makeOpen").addEventListener("click",function(e){
+
+e.preventDefault();
+
+if(document.getElementById("makeDropdown").classList.contains("show")){
+closeMakeMenu();
+}else{
+openMakeMenu();
+}
+
+});
+
+document.getElementById("makeSearchInput").addEventListener("input",function(){
+
+renderMakeOptions();
+
+});
+
+document.getElementById("makeSearchInput").addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+e.preventDefault();
+}
+});
+
+function createId(){
+
+return Date.now().toString(36)+"-"+Math.random()
+.toString(36).slice(2,10);
+}
+
+document.getElementById("saveItem").addEventListener("click",function(){
+
+const model=document.getElementById("model").value.trim();
+const year=document.getElementById("year").value.trim();
+const sale=document.getElementById("sale").value.trim();
+const buy=document.getElementById("buy").value.trim();
+const description=document.getElementById("description").value.trim();
+
+if(!model){
+alert("Enter a model.");
+return;
+}
+
+if(!selectedMake){
+alert("Select a make.");
+return;
+}
+
+const motor={
+id:createId(),
+model:model,
+year:year,
+make:selectedMake,
+sale:sale||0,
+buy:buy||0,
+description:description
+};
+
+motors.push(motor);
+
+saveAll();
+
+document.getElementById("model").value="";
+document.getElementById("year").value="";
+document.getElementById("sale").value="";
+document.getElementById("buy").value="";
+document.getElementById("description").value="";
+
+selectedMake="";
+
+document.getElementById("makeButtonText").textContent="Select make...";
+document.getElementById("makeOpen").classList.remove("active");
+document.getElementById("selectedMake").textContent="No make selected";
+
+closeMakeMenu();
+
+});
+
+document.getElementById("ticketPreviewBtn").addEventListener("click",function(){
+
+const selectedMotors=motors.filter(motor=>
+ticket.some(id=>String(id)===String(motor.id))
+);
+
+const items=document.getElementById("receiptItems");
+
+if(!selectedMotors.length){
+
+items.innerHTML=`
+<div class="receiptItem">
+No items in ticket.
+</div>
+`;
+
+document.getElementById("receiptTotal").textContent="0.00";
+
+}else{
+
+let total=0;
+
+items.innerHTML=selectedMotors.map(motor=>{
+
+const price=Number(motor.sale||0);
+
+total+=price;
+
+return `
+<div class="receiptItem">
+${safe(normalizeMake(motor.make))} ${safe(motor.model)}
+<br>
+${safe(motor.year)}
+<br>
+$${price.toFixed(2)}
+</div>
+`;
+
+}).join("");
+
+document.getElementById("receiptTotal").textContent=
+total.toFixed(2);
 
 }
 
+document.getElementById("preview").classList.add("show");
 
-/* =====================================================
-   DELETE MOTOR
-===================================================== */
+});
 
-function deleteMotor(id){
+document.getElementById("preview").addEventListener("click",function(e){
 
-  motors =
-    motors.filter(
-      motor =>
-        String(motor.id) !==
-        String(id)
-    );
-
-
-  ticketIds =
-    ticketIds.filter(
-      ticketId =>
-        String(ticketId) !==
-        String(id)
-    );
-
-
-  saveData();
-
-  renderSearch();
-  renderTicket();
-  renderReceipt();
-
+if(e.target===this){
+this.classList.remove("show");
 }
 
+});
 
-/* =====================================================
-   MAKE SEARCH
-===================================================== */
+document.getElementById("printBtn").addEventListener("click",function(){
 
-const makeSearch =
-  document.getElementById(
-    "makeSearch"
-  );
+window.print();
 
+});
 
-const makeList =
-  document.getElementById(
-    "makeList"
-  );
+document.addEventListener("keydown",function(e){
 
+if(e.key!=="Enter")return;
 
-const selectedMakeText =
-  document.getElementById(
-    "selectedMake"
-  );
+const target=e.target;
 
+if(
+target.tagName==="INPUT" &&
+target.id!=="makeSearchInput"
+){
+e.preventDefault();
+target.blur();
+}
 
-function renderMakeList(){
+});
 
-  const query =
-    makeSearch.value
-      .toLowerCase()
-      .trim();
+document.addEventListener("click",function(e){
 
+const dropdown=document.getElementById("makeDropdown");
+const makeBox=document.querySelector(".makeBox");
 
-  const matches =
-    BRANDS.filter(brand=>{
+if(
+dropdown.classList.contains("show") &&
+!makeBox.contains(e.target)
+){
+closeMakeMenu();
+}
 
-      return (
-        brand.name
-          .toLowerCase()
-          .includes(query) ||
+});
 
-        brand.short
-          .toLowerCase()
-          .includes(query)
-      );
+loadTheme();
+openPage("home");
 
-    });
-
-
-  if(matches.length === 0){
-
-    makeList.innerHTML =
-      `<div style="
-        padding:12px;
-        color:#888;
-        text-align:center;
-      ">
-        NO MAKES FOUND
-      </div>`;
-
-    makeList.classList.add("open");
-
-    return;
-
-  }
-
-
-  makeList.innerHTML =
-    matches.map(
-      brand=>`
-
-        <button
-          type="button"
-          class="make-option ${
-            selectedMake === brand.name
-              ? "selected
+</script>
+</body>
+</html>

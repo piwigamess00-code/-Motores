@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#25282c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Motors</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">INVENTORY</div>
+      <h1>MOTORS</h1>
+    </div>
+    <button id="themeBtn" class="icon-btn" aria-label="Toggle dark mode">☾</button>
+  </header>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="home-grid">
+        <button class="menu-btn" data-screen="search">SEARCH</button>
+        <button class="menu-btn" data-screen="ticket">TICKET</button>
+        <button class="menu-btn" data-screen="buy">BUY$</button>
+        <button class="menu-btn" data-screen="sales">SALES$</button>
+        <button class="menu-btn wide" data-screen="add">ADD ITEM</button>
+      </div>
+      <div class="stats">
+        <div><span id="motorCount">0</span><small>MOTORS</small></div>
+        <div><span id="inventoryValue">$0</span><small>SALES VALUE</small></div>
+      </div>
+    </section>
+
+    <section id="search" class="screen">
+      <div class="screen-head"><button class="back">←</button><h2>SEARCH</h2></div>
+      <div class="filters">
+        <input id="searchInput" placeholder="Search model, year, description..." autocomplete="off">
+        <select id="searchMake"><option value="">ALL MAKES</option></select>
+      </div>
+      <div id="searchList" class="motor-list"></div>
+    </section>
+
+    <section id="buy" class="screen">
+      <div class="screen-head"><button class="back">←</button><h2>BUY$</h2></div>
+      <div class="filters">
+        <input id="buySearch" placeholder="Search..." autocomplete="off">
+        <select id="buyMake"><option value="">ALL MAKES</option></select>
+      </div>
+      <div class="money-total"><span>Total spent</span><strong id="buyTotal">$0</strong></div>
+      <div id="buyList" class="motor-list"></div>
+    </section>
+
+    <section id="sales" class="screen">
+      <div class="screen-head"><button class="back">←</button><h2>SALES$</h2></div>
+      <div class="filters">
+        <input id="salesSearch" placeholder="Search..." autocomplete="off">
+        <select id="salesMake"><option value="">ALL MAKES</option></select>
+      </div>
+      <div class="money-total"><span>Total sales value</span><strong id="salesTotal">$0</strong></div>
+      <div id="salesList" class="motor-list"></div>
+    </section>
+
+    <section id="add" class="screen">
+      <div class="screen-head"><button class="back">←</button><h2>ADD ITEM</h2></div>
+      <form id="motorForm" class="form-card">
+        <label>MAKE<input id="make" required placeholder="Toyota"></label>
+        <label>MODEL<input id="model" required placeholder="Camry"></label>
+        <label>YEAR<input id="year" inputmode="numeric" placeholder="2020"></label>
+        <label>DESCRIPTION<textarea id="description" rows="3" placeholder="Color, condition, notes..."></textarea></label>
+        <div class="two">
+          <label>BUY PRICE<input id="buyPrice" type="number" min="0" step="0.01" placeholder="0"></label>
+          <label>SALE PRICE<input id="salePrice" type="number" min="0" step="0.01" placeholder="0"></label>
+        </div>
+        <button class="primary" type="submit">SAVE MOTOR</button>
+      </form>
+    </section>
+
+    <section id="ticket" class="screen">
+      <div class="screen-head">
+        <button class="back">←</button><h2>TICKET</h2>
+        <button id="previewBtn" class="small-btn">PREVIEW</button>
+      </div>
+      <div class="ticket-tools">
+        <button id="selectAll" class="small-btn">SELECT ALL</button>
+        <button id="clearTicket" class="small-btn">CLEAR</button>
+      </div>
+      <div id="brandGroups"></div>
+      <div id="ticketList" class="motor-list"></div>
+      <div class="ticket-summary">
+        <span id="ticketCount">0 MOTORS</span>
+        <strong id="ticketTotal">$0</strong>
+      </div>
+      <div id="receipt" class="receipt hidden"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-home active" data-screen="home">HOME</button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
